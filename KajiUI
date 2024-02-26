@@ -1,0 +1,6023 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.U2D;
+using System.Linq;
+using System.Reflection;
+
+
+
+public class KajiUI : MonoBehaviour
+{
+
+	//鍛冶屋レベルアップする。HP消費するアイテム。
+	//Playerにつけようとしましたが、かえってわけわからなくなるのでやめました。
+	// LeanTween.move(button, new Vector3(0f,100f,0f), 1f).setDelay(1f);//斜め
+	//	public RectTransform button;
+
+	///////////////////////////////////画像設定
+	///
+	public RectTransform[] ImageItems = new RectTransform[100];
+	public GameObject[] Consumptionitems = new GameObject[100];
+	//public GameObject[] TextPro = new GameObject[3];
+
+	//public TextMeshProUGUI ItemTexta;
+	//public TextMeshProUGUI ItemTextb;
+	//	public TextMeshProUGUI ItemTextc;
+	public GameObject CreateScrollView;//クリエートするときtrueになります。
+	public GameObject DamiImage;//アイテムが一個の場合にtrueになります。
+
+
+	//public Sprite[] sprites; // publicまたはSerializeFieldとしてフィールドを公開する
+
+
+	//  [SerializeField] Sprite[] sprites;//インスペクター上でファイルにあるpngアイテムの画像を指定します。
+	public int ItemImageNo;//アイテム画像No.を指定します。
+
+	public Animator childAnimator;
+	public GameObject Particleposityon;//パーティクル生成ポジションです。
+
+	public AudioSource Music;
+
+	public AudioClip sound1;//アイテムを作る音
+	public AudioClip sound2;//アイテムを作る音
+
+	public Text TextPlayerHP;
+	public Slider SliderHPPlayer;
+	public Text TextPlayerMP;
+
+	public Slider SliderMPPlayer;
+
+
+
+
+
+	//////////////////////////////////////
+
+	public GameObject ZukanView;
+	public GameObject ZukanButton;
+	public GameObject MagckScrollView;
+	public GameObject WeaponScrollView;
+	public GameObject armorScrollView;
+	public GameObject beltScrollView;
+	public GameObject bootsScrollView;
+	public GameObject handScrollView;
+	public GameObject helmetScrollView;
+	public GameObject PantsScrollView;
+	public GameObject ringScrollView;
+	public GameObject ingotScrollView;
+	public GameObject PortionScrollView;
+
+	public GameObject jewelryScrollView;
+
+
+	public GameObject StageScrollView;
+	///////////////////////////////////LV1の時にfalseになります。
+	public GameObject MagckScrollView0;
+	public GameObject WeaponScrollView0;
+	public GameObject armorScrollView0;
+	public GameObject beltScrollView0;
+	public GameObject bootsScrollView0;
+	public GameObject handScrollView0;
+	public GameObject helmetScrollView0;
+	public GameObject PantsScrollView0;
+	public GameObject ringScrollView0;
+	public GameObject ingotScrollView0;
+	public GameObject PortionScrollView0;
+
+	public GameObject jewelryScrollView0;
+
+
+	public GameObject StageScrollView0;
+	public GameObject ItemL24;//鍛冶レベル上がるとtrue
+	public GameObject ItemL25;//鍛冶レベル上がるとtrue
+
+	///////////////////////////////////LV1の時にfalseになります。
+
+
+	public GameObject ItemLV34;//鍛冶レベル上がるとtrue
+	public GameObject ItemLV32;//鍛冶レベル上がるとtrue
+	public GameObject ItemLV31;//鍛冶レベル上がるとtrue
+	public GameObject ItemLV27;//鍛冶レベル上がるとtrue
+	public GameObject ItemLV25;//鍛冶レベル上がるとtrue
+	public GameObject ItemLV24;//鍛冶レベル上がるとtrue
+	public GameObject ItemLV7;//鍛冶レベル上がるとtrue
+	public GameObject ItemLV3;//鍛冶レベル上がるとtrue
+	public GameObject ItemLV2;//鍛冶レベル上がるとtrue
+
+	public GameObject ItemLV1;//鍛冶レベル上がるとtrue
+
+	public TextMeshProUGUI blacksmithText;//LV
+
+	///////////////////////////////////
+	public GameObject ItemLV329;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	///////////////////////////////////
+	public GameObject ItemLV327;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	///////////////////////////////////
+	public GameObject ItemLV219;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+
+	///////////////////////////////////
+	public GameObject ItemLV201;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV192;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	///////////////////////////////////
+	public GameObject ItemLV191;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	///////////////////////////////////
+	public GameObject ItemLV190;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	///////////////////////////////////
+	public GameObject ItemLV179;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	///////////////////////////////////
+	public GameObject ItemLV178;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV177;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV174;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV168;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	///////////////////////////////////
+	public GameObject ItemLV167;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	///////////////////////////////////
+	public GameObject ItemLV166;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	///////////////////////////////////
+	public GameObject ItemLV165;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV164;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV155;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV154;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV153;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	///////////////////////////////////
+	public GameObject ItemLV152;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	///////////////////////////////////
+	public GameObject ItemLV151;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV150;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV149;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV148;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV146;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV143;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV142;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV141;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV138;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV128;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV127;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV125;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV124;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV123;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV121;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV120;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV119;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV118;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV117;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV116;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV115;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV114;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV113;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV112;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV111;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV110;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV109;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV108;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV107;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV105;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV104;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV103;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV100;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV97;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV96;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV95;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV94;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV93;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV92;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV91;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV90;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV88;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV86;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV85;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV81;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV80;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV79;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV76;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public GameObject ItemLV75;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV74;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV73;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV72;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV71;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV68;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV67;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV66;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV65;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+	public GameObject ItemLV61;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+	public Slider blacksmithSlider;
+	public GameObject ItemLV55;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+
+
+	public GameObject ItemLV46;//鍛冶レベル上がるとtrueそれかクエスト アイテム？どれかの条件
+
+
+
+	public GameObject ItemLV42;
+
+
+
+
+	public GameObject WeaponSerectOnbottun;//剣が作成していないならfalse
+
+	public GameObject WeaponSerect;
+
+
+	public GameObject PlayerMP;
+
+	public GameObject Player;
+	public GameObject ScrollView;//アイテムを表示しています。
+
+
+
+
+
+
+
+
+	private int Itemint;
+
+	private int HPrecovery;
+
+
+
+
+
+	private int LVint;
+	// public Text ItemText40a; 
+	private int kint;
+
+	private int Randamu;
+	private int RandamuMax;
+	private int RandamuMin;
+	private int HPPlayermax;
+	private int MPPlayermax;
+
+	// ImageItemを配列で管理します
+
+	//public Image[] Images; // キャンバスのImageを指定します。
+	public TextMeshProUGUI[] ItemTexts = new TextMeshProUGUI[3];
+
+	public int[] activeIndices;
+	public int[] activeTextIndices; // アクティブにするItemTextsのインデックス
+
+	public int[] itemSuffix; //消費数。
+
+	private int Viewtypeint;
+	public int ItemCreateint = -1;//ここを設定するとハンマーを叩いた時にアイテムが作成される番号が割り当てられます。制作されるアイテムの番号です。
+
+	public void Opena()
+	{
+
+
+		activeIndices = new int[] { 9, 10, 12 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 4, 5, 3 }; //消費数。
+		OpenCrieta();
+	}
+
+	public void aOpena1()
+	{
+
+
+		activeIndices = new int[] { 13, 14 }; //二個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,2をtrueに設定
+		itemSuffix = new int[] { 3, 6 }; //消費数。
+		OpenCrieta();
+	}
+
+	public void aOpena2()
+	{
+
+		//一個の場合はtrueに設定します。
+
+		activeIndices = new int[] { 15 }; //1個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts1をtrueに設定
+		itemSuffix = new int[] { 2, }; //消費数。
+		OpenCrieta();
+	}
+
+
+
+	public void OpenCrieta()
+	{
+		Consumptionitems[ItemCreateint].gameObject.SetActive(true);
+		ImageItems[ItemCreateint].anchoredPosition = new Vector2(230, 300);
+		CreateScrollView.SetActive(true);
+		int suffixIndex = 0;
+
+		// activeIndicesの数に応じて異なる位置を割り当てます
+		int count = activeIndices.Length; // 配列の場合はLengthを使用します
+		int yStart = (count == 1) ? 300 : 600;
+		int yStep = (count == 3) ? 300 : 600;
+
+		// activeIndicesの数に応じて異なるItemTextsをアクティブにします
+		int[][] activeTexts = new int[][] {
+		new int[] {1}, // 1つ表示の場合
+        new int[] {0, 2}, // 2つ表示の場合
+        new int[] {0, 1, 2} // 3つ表示の場合
+    };
+
+		// 全てのItemTextsを非アクティブにします
+		foreach (var itemText in ItemTexts)
+		{
+			itemText.gameObject.SetActive(false);
+		}
+
+		foreach (int i in activeIndices)
+		{
+			if (suffixIndex < activeTextIndices.Length && i < Consumptionitems.Length && suffixIndex < itemSuffix.Length)
+			{
+				Consumptionitems[i].gameObject.SetActive(true);
+				ItemTexts[activeTextIndices[suffixIndex]].gameObject.SetActive(true);
+				ItemTexts[activeTextIndices[suffixIndex]].text = ES3.Load<int>("Item" + i, defaultValue: 0) + " - " + itemSuffix[suffixIndex];
+				//ItemTexts[activeTextIndices[suffixIndex]].text = ES3.Load<int>("Item" + Consumptionitems[i].gameObject.name, defaultValue: 0) + " - " + itemSuffix[suffixIndex];
+				//ItemTexts[activeTextIndices[suffixIndex]].text = ES3.Load<int>("Item" + Consumptionitems[i], defaultValue: 0) + " - " + itemSuffix[suffixIndex];
+				//				ItemTexts[activeTextIndices[suffixIndex]].text = ES3.Load<int>("Item" + activeIndices[i], defaultValue: 0) + " - " + itemSuffix[suffixIndex];
+
+				// ImageItemsの位置を設定します
+				ImageItems[i].anchoredPosition = new Vector2(-300, yStart - yStep * suffixIndex);
+
+				// ItemTextsのアクティブ状態を設定します
+				foreach (int index in activeTexts[count - 1])
+				{
+					ItemTexts[index].gameObject.SetActive(true);
+				}
+
+				suffixIndex++;
+			}
+		}
+	}
+
+	/*
+
+
+public void OpenCrieta()
+	{
+		Consumptionitems[ItemCreateint].gameObject.SetActive(true);
+		ImageItems[ItemCreateint].anchoredPosition = new Vector2(230, 300);
+		CreateScrollView.SetActive(true);
+		int suffixIndex = 0;
+
+		// activeIndicesの数に応じて異なる位置を割り当てます
+		int count = activeIndices.Length; // 配列の場合はLengthを使用します
+		int yStart = (count == 1) ? 300 : 600;
+		int yStep = (count == 3) ? 300 : 600;
+
+		// activeIndicesの数に応じて異なるItemTextsをアクティブにします
+		int[] activeTexts = (count == 1) ? new int[] { 1 } : (count == 2) ? new int[] { 0, 2 } : new int[] { 0, 1, 2 };
+
+		// 全てのItemTextsを非アクティブにします
+		foreach (var itemText in ItemTexts)
+		{
+			itemText.gameObject.SetActive(false);
+		}
+
+		foreach (int i in activeIndices)
+		{
+			if (suffixIndex < activeTextIndices.Length && i < Consumptionitems.Length && suffixIndex < itemSuffix.Length)
+			{
+				Consumptionitems[i].gameObject.SetActive(true);
+				ItemTexts[activeTextIndices[suffixIndex]].gameObject.SetActive(true);
+				ItemTexts[activeTextIndices[suffixIndex]].text = ES3.Load<int>("Item" + Consumptionitems[i].gameObject.name, defaultValue: 0) + " - " + itemSuffix[suffixIndex];
+
+				// ImageItemsの位置を設定します
+				ImageItems[i].anchoredPosition = new Vector2(-300, yStart - yStep * suffixIndex);
+
+				// ItemTextsのアクティブ状態を設定します
+				foreach (int index in activeTexts)
+				{
+					ItemTexts[index].gameObject.SetActive(true);
+				}
+
+				suffixIndex++;
+			}
+		}
+	}
+
+
+
+
+public void OpenCrieta()
+	{
+		Consumptionitems[ItemCreateint].gameObject.SetActive(true);
+		ImageItems[ItemCreateint].anchoredPosition = new Vector2(230, 300);
+		CreateScrollView.SetActive(true);
+		int suffixIndex = 0;
+
+		// activeIndicesの数に応じて異なる位置を割り当てます
+		int count = activeIndices.Length; // 配列の場合はLengthを使用します
+		int yStart = (count == 1) ? 300 : 600;
+		int yStep = (count == 3) ? 300 : 600;
+
+		foreach (int i in activeIndices)
+		{
+			if (suffixIndex < activeTextIndices.Length && i < Consumptionitems.Length && suffixIndex < itemSuffix.Length)
+			{
+				Consumptionitems[i].gameObject.SetActive(true);
+				ItemTexts[activeTextIndices[suffixIndex]].gameObject.SetActive(true);
+				ItemTexts[activeTextIndices[suffixIndex]].text = ES3.Load<int>("Item" + Consumptionitems[i].gameObject.name, defaultValue: 0) + " - " + itemSuffix[suffixIndex];
+
+				// ImageItemsの位置を設定します
+				ImageItems[i].anchoredPosition = new Vector2(-300, yStart - yStep * suffixIndex);
+
+				suffixIndex++;
+			}
+		}
+	}
+
+
+	public void OpenCrieta()
+	{
+		Consumptionitems[ItemCreateint].gameObject.SetActive(true);//制作するアイテムを表示します。
+		ImageItems[ItemCreateint].anchoredPosition = new Vector2(230, 300);//制作するアイテムの位置を表示します。
+		CreateScrollView.SetActive(true);
+		int suffixIndex = 0;
+		foreach (int i in activeIndices)
+		{
+			if (suffixIndex < activeTextIndices.Length && i < Consumptionitems.Length && suffixIndex < itemSuffix.Length)
+			{
+				Consumptionitems[i].gameObject.SetActive(true);
+				ItemTexts[activeTextIndices[suffixIndex]].gameObject.SetActive(true);
+				ItemTexts[activeTextIndices[suffixIndex]].text = ES3.Load<int>("Item" + Consumptionitems[i].gameObject.name, defaultValue: 0) + " - " + itemSuffix[suffixIndex];
+				suffixIndex++;
+			}
+		}
+	}
+	
+	*/
+
+	public void CloseCrieta()
+	{
+		//Consumptionitems[ItemCreateint].gameObject.SetActive(false);
+		CreateScrollView.SetActive(false);
+
+		int suffixIndex = 0;
+		foreach (int i in activeIndices)
+		{
+			if (suffixIndex < activeTextIndices.Length && i < Consumptionitems.Length)
+			{
+				Consumptionitems[i].gameObject.SetActive(false);
+				ItemTexts[activeTextIndices[suffixIndex]].gameObject.SetActive(false);
+				suffixIndex++;
+			}
+		}
+
+
+
+
+	}
+	public void ViewOpen()//制作画面を閉じてview画面を開きます。
+	{
+		Consumptionitems[ItemCreateint].gameObject.SetActive(false);
+		CreateScrollView.SetActive(false);
+
+		int suffixIndex = 0;
+		foreach (int i in activeIndices)
+		{
+			if (suffixIndex < activeTextIndices.Length && i < Consumptionitems.Length)
+			{
+				Consumptionitems[i].gameObject.SetActive(false);
+				ItemTexts[activeTextIndices[suffixIndex]].gameObject.SetActive(false);
+				suffixIndex++;
+			}
+		}
+
+		OpenLastScrollView();
+
+		//OpenScrollView(ViewType.Stage);
+
+
+	}
+
+	public void OpenStageScrollView()//
+	{
+		OpenScrollView(ViewType.Stage);
+	}
+
+	public void OpenPortionScrollView()//
+	{
+		OpenScrollView(ViewType.Portion);
+	}
+	public void OpeningotScrollView()//
+	{
+		OpenScrollView(ViewType.Ingot);
+	}
+
+	public void OpenringScrollView()//
+	{
+		OpenScrollView(ViewType.Ring);
+	}
+
+	public void OpenPantsScrollView()//
+	{
+		OpenScrollView(ViewType.Pants);
+	}
+
+	public void OpenhelmetScrollView()//
+	{
+		OpenScrollView(ViewType.Helmet);
+	}
+
+	public void OpenhandScrollView()//
+	{
+		OpenScrollView(ViewType.Hand);
+
+	}
+
+	public void OpenbootsScrollView()//
+	{
+		OpenScrollView(ViewType.Boots);
+
+	}
+
+	public void OpenbeltScrollView()//
+	{
+		OpenScrollView(ViewType.Belt);
+
+	}
+
+	public void OpenarmorScrollView()//
+	{
+		OpenScrollView(ViewType.Armor);
+
+	}
+
+	public void OpenWeaponScrollView()//
+	{
+		OpenScrollView(ViewType.Weapon);
+	}
+
+	public void OpenMagckScrollView()//
+	{
+
+
+		OpenScrollView(ViewType.Magck);
+
+	}
+	public void OpenjewelryScrollView()//
+	{
+
+		//jewelryScrollView.SetActive(true);
+		OpenScrollView(ViewType.Jewelry);
+
+	}
+
+	public enum ViewType
+	{
+		None,
+		Jewelry,
+		Stage,
+		Portion,
+		Ingot,
+		Ring,
+		Pants,
+		Helmet,
+		Hand,
+		Boots,
+		Belt,
+		Armor,
+		Weapon,
+		Magck
+	}
+
+	private ViewType lastViewType = ViewType.None;
+
+	public void OpenScrollView(ViewType viewType)
+	{
+		switch (viewType)
+		{
+			case ViewType.Jewelry:
+				jewelryScrollView.SetActive(true);
+				break;
+			case ViewType.Stage:
+				StageScrollView.SetActive(true);
+				break;
+			case ViewType.Portion:
+				PortionScrollView.SetActive(true);
+				break;
+			case ViewType.Ingot:
+				ingotScrollView.SetActive(true);
+				break;
+			case ViewType.Ring:
+				ringScrollView.SetActive(true);
+				break;
+			case ViewType.Pants:
+				PantsScrollView.SetActive(true);
+				break;
+			case ViewType.Helmet:
+				helmetScrollView.SetActive(true);
+				break;
+			case ViewType.Hand:
+				handScrollView.SetActive(true);
+				break;
+			case ViewType.Boots:
+				bootsScrollView.SetActive(true);
+				break;
+			case ViewType.Belt:
+				beltScrollView.SetActive(true);
+				break;
+			case ViewType.Armor:
+				armorScrollView.SetActive(true);
+				break;
+			case ViewType.Weapon:
+				WeaponScrollView.SetActive(true);
+				break;
+			case ViewType.Magck:
+				MagckScrollView.SetActive(true);
+				break;
+		}
+		lastViewType = viewType; // 最後に開いたViewを記憶
+	}
+
+	public void OpenLastScrollView()
+	{
+		if (lastViewType != ViewType.None)
+		{
+			OpenScrollView(lastViewType); // 最後に開いたViewを開く
+		}
+	}
+
+
+
+
+
+	/*
+		public void OpenCrieta()
+	{
+		int suffixIndex = 0;
+		foreach (int i in activeIndices)
+		{
+			if (suffixIndex < ItemTexts.Length && i < Consumptionitems.Length && suffixIndex < itemSuffix.Length)
+			{
+				Consumptionitems[i].gameObject.SetActive(true);
+				ItemTexts[suffixIndex].gameObject.SetActive(true);
+				ItemTexts[suffixIndex].text = ES3.Load<int>("Item" + Consumptionitems[i].gameObject.name, defaultValue: 0) + " - " + itemSuffix[suffixIndex];
+				suffixIndex++;
+			}
+		}
+	}
+
+	public void CloseCrieta()
+	{
+		CreateScrollView.SetActive(false);
+		int suffixIndex = 0;
+		foreach (int i in activeIndices)
+		{
+			if (suffixIndex < ItemTexts.Length && i < Consumptionitems.Length)
+			{
+				Consumptionitems[i].gameObject.SetActive(false);
+				ItemTexts[suffixIndex].gameObject.SetActive(false);
+				suffixIndex++;
+			}
+		}
+	}
+		*/
+
+
+
+	public void ActivateItem(int index)
+	{
+		//ES3.Save<int>("Item", ES3.Load<int>("Item", defaultValue: 0) + 1);
+		kint = ES3.Load<int>("blacksmithExp", defaultValue: 0) + Randamu; ES3.Save<int>("blacksmithExp", kint);
+		LV();
+		Statuscalculation();
+		Music.PlayOneShot(sound1);
+		// 指定されたインデックスのImageItemをアクティブにします
+		var ImageItem = ImageItems[index];
+		ImageItem.gameObject.SetActive(true); // オブジェクトをアクティブに設定します
+
+		// アニメーションを開始します
+		StartAnimation(ImageItem);
+	}
+
+	public void StartAnimation(RectTransform ImageItem)
+	{
+		ImageItem.gameObject.SetActive(true); // オブジェクトをアクティブに設定します
+											  //ImageItem.anchoredPosition = new Vector2(tagretpos.position.x, tagretpos.position.y);
+
+		//ImageItem.anchoredPosition = Vector2.zero;
+
+		ImageItem.anchoredPosition = new Vector2(400, -900);
+		float randomX = Random.Range(500, 1000);
+		LeanTween.move(ImageItem.gameObject, new Vector3(this.gameObject.transform.position.x + randomX, this.gameObject.transform.position.y + 2000f, this.gameObject.transform.position.z), 1.1f)
+			.setOnComplete(() => { ImageItem.gameObject.SetActive(false); }); // アニメーションが完了したらオブジェクトを非アクティブにします
+	}
+
+
+
+	public void AnimatorPlayer()
+	{
+		CloseCrieta();//ここで表示しているアイテムCanvasを非表示にします。
+		childAnimator.SetInteger("AnimationMode", 777);//ハンマーを叩きます。
+													   //  EndDrag();
+	}
+
+
+
+	public void Start()
+	{
+		//this.childAnimator = GetComponent<Animator>();
+
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		if (HPPlayer <= 0)
+		{
+			HPPlayer = 1;
+			ES3.Save<int>("HPPlayer", HPPlayer);
+		}
+
+		ES3.Save<int>("HPrecovery", 0);
+
+		int Expplayer = ES3.Load<int>("EXPPlayer", defaultValue: 0);
+
+		string[] attributes = new string[] { "HP", "MP", "AT", "DF", "Speed", "Luck" };
+		string[] items = new string[] { "ring", "belt", "hand", "Sode", "armor", "shield", "helmet", "luck", "Pants", "boots" };
+
+		foreach (string attribute in attributes)
+		{
+			int total = ES3.Load<int>("LV" + attribute + "Player", defaultValue: 0);
+			foreach (string item in items)
+			{
+				total += ES3.Load<int>(attribute + item, defaultValue: 0);
+			}
+
+			if (attribute == "HP" || attribute == "MP")
+			{
+				Slider slider = attribute == "HP" ? SliderHPPlayer : SliderMPPlayer;
+				Text text = attribute == "HP" ? TextPlayerHP : TextPlayerMP;
+
+				slider.maxValue = total;
+				int attributeValue = ES3.Load<int>(attribute + "Player", defaultValue: attribute == "HP" ? 1 : 0);
+				if (attributeValue <= 0) // HPまたはMPが0以下なら
+				{
+					attributeValue = 1; // HPまたはMPを1に設定
+					ES3.Save<int>(attribute + "Player", attributeValue);
+				}
+				slider.value = attributeValue;
+				text.text = attributeValue.ToString();
+			}
+			else
+			{
+				ES3.Save<int>(attribute + "PlayerSougou", total);
+			}
+		}
+
+
+		LV();
+		//ここで？解禁します。条件に達していなければfalse
+		if (ES3.Load<int>("HitText27", defaultValue: 0) >= 100)
+		{
+			//	Item29sclool.SetActive(true);//炎剣を作れるようになります。
+		}
+		if (ES3.Load<int>("Item24", defaultValue: 0) == 1)
+		{
+			//Item24a.SetActive(false);
+		}
+
+
+	}
+
+
+
+	public void LV()
+	{
+		int blacksmithExp = ES3.Load<int>("blacksmithExp", defaultValue: 0);
+		int blacksmithExpMax = ES3.Load<int>("blacksmithExpMax", defaultValue: 3);
+		int blacksmithLV = ES3.Load<int>("blacksmithLV", defaultValue: 1);
+
+		if (blacksmithExp >= blacksmithExpMax)
+		{
+			int nextExp = blacksmithExpMax * Random.Range(2, 8);
+			ES3.Save<int>("blacksmithExpMax", nextExp);
+			ES3.Save<int>("blacksmithExp", 0);
+
+			blacksmithLV += 1;
+			ES3.Save<int>("blacksmithLV", blacksmithLV);
+			Aaji();
+		}
+
+		blacksmithSlider.maxValue = blacksmithExpMax;
+		blacksmithSlider.value = blacksmithExp;
+
+		blacksmithText.text = ("LV " + blacksmithLV);
+
+		// アイテムを管理する辞書を作成します。
+		Dictionary<int, GameObject[]> levelItems = new Dictionary<int, GameObject[]>
+{
+	{999000, new GameObject[]{ItemLV74, ItemLV73, ItemLV72, ItemLV71}},
+	{10, new GameObject[]{ItemLV329, ItemLV219, ItemLV150, ItemLV68, ItemLV67, ItemLV66, ItemLV65}},
+	{9, new GameObject[]{ItemLV155}},
+	{8, new GameObject[]{ItemLV165}},
+	{7, new GameObject[]{ItemLV167, ItemLV166}},
+	{6, new GameObject[]{ItemLV154, ItemLV141, ItemLV121, ItemLV94}},
+	{5, new GameObject[]{ItemLV168, ItemLV142, ItemLV104, ItemLV93, ItemLV80, ItemLV34, ItemLV24, ItemLV25}},
+	{4, new GameObject[]{ItemLV177, ItemLV146, ItemLV103, ItemLV1, ItemLV7, ItemLV3}},
+	{3, new GameObject[]{ItemLV179, ItemLV143, ItemLV100, ItemLV46, ItemLV2, ItemLV31, ItemLV32}},
+	{2, new GameObject[]{ItemLV178, ItemLV128, ItemLV92, ItemLV79, ItemLV42, ItemLV27}},
+	{1, new GameObject[]{MagckScrollView0, WeaponScrollView0, armorScrollView0, beltScrollView0, bootsScrollView0, handScrollView0, helmetScrollView0, PantsScrollView0, ringScrollView0, ingotScrollView0, PortionScrollView0, StageScrollView0, jewelryScrollView0, ZukanButton, ItemL24, ItemL25}}
+};
+
+		foreach (var level in levelItems.Keys.OrderByDescending(l => l))
+		{
+			if (LVint >= level)
+			{
+				foreach (var item in levelItems[level])
+				{
+					item.SetActive(true);
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+
+
+
+	}
+
+	public void Aaji()//ステータスを計算します。
+	{
+		string[] attributes = new string[] { "HP", "MP" };
+		string[] items = new string[] { "ring", "belt", "hand", "Sode", "armor", "shield", "helmet", "luck", "Pants" };
+
+		foreach (string attribute in attributes)
+		{
+			int total = ES3.Load<int>("LV" + attribute + "Player", defaultValue: 0);
+			foreach (string item in items)
+			{
+				total += ES3.Load<int>(attribute + item, defaultValue: 0);
+			}
+
+			ES3.Save<int>(attribute + "Player", total);
+		}
+
+		Music.PlayOneShot(sound2);
+	}
+
+	public void Statuscalculation()//ステータスを計算します。
+	{
+
+		int HPrecoveryint = ES3.Load<int>("HPrecovery", defaultValue: 0);
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 1) + HPrecoveryint;
+		if (HPPlayer <= 0) // HPが0以下なら
+		{
+			HPPlayer = 1; // HPを1に設定
+		}
+		if (HPPlayer >= HPPlayermax)
+		{
+			HPPlayer = HPPlayermax;
+		}
+		ES3.Save<int>("HPPlayer", HPPlayer);
+		SliderHPPlayer.value = HPPlayer;
+		TextPlayerHP.text = HPPlayer.ToString();
+
+		int MPrecoveryint = ES3.Load<int>("MPrecovery", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 1) + MPrecoveryint;
+		if (MPPlayer <= 0) // MPが0以下なら
+		{
+			MPPlayer = 1; // MPを1に設定
+		}
+		if (MPPlayer >= MPPlayermax)
+		{
+			MPPlayer = MPPlayermax;
+		}
+		ES3.Save<int>("MPPlayer", MPPlayer);
+		SliderMPPlayer.value = MPPlayer;
+		TextPlayerMP.text = MPPlayer.ToString();
+
+		ES3.Save<int>("HPrecovery", 0);
+		ES3.Save<int>("MPrecovery", 0);
+	}
+
+
+	public void ALLfalse()
+	{
+		List<GameObject> gameObjects = new List<GameObject>()
+{
+	ZukanButton, ZukanView, jewelryScrollView, StageScrollView, PortionScrollView,
+	ingotScrollView, ringScrollView, PantsScrollView, helmetScrollView, handScrollView,
+	bootsScrollView, beltScrollView, armorScrollView, WeaponScrollView, MagckScrollView,
+	ScrollView, //選択画面。
+    // 以下、ItemaとItemのGameObjectを追加
+    WeaponSerect, WeaponSerectOnbottun
+};
+
+		foreach (var gameObject in gameObjects)
+		{
+			gameObject.SetActive(false);
+		}
+	}
+	public void ZukanButtontrue()
+	{
+		ZukanButton.SetActive(true);
+	}
+
+
+
+	public void HontaiScrollViewtrue()
+	{
+		ScrollView.SetActive(true);//選択画面。
+								   // WeaponSerect.SetActive(true);
+		WeaponSerectOnbottun.SetActive(true);
+		ZukanButton.SetActive(true);
+	}
+	public void HontaiScrollViewfalse()
+	{
+		ScrollView.SetActive(false);//選択画面。
+		WeaponSerect.SetActive(false);
+		WeaponSerectOnbottun.SetActive(false);
+	}
+
+	public void ItemCreatejudgement()
+	{
+		if (ItemCreateint != -1)
+		{
+			// メソッド名を作成
+			string methodName = "ItemCreate" + ItemCreateint;
+
+			// メソッドを取得
+			MethodInfo method = this.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+
+			// メソッドが存在する場合は実行
+			if (method != null)
+			{
+				method.Invoke(this, null);
+			}
+		}
+	}
+	public void ItemCreate329()//リング
+	{
+		int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int item6 = ES3.Load<int>("Item6", defaultValue: 0);
+		int item168 = ES3.Load<int>("Item168", defaultValue: 0);
+
+		if (hpPlayer < 11 || mpPlayer < 10 || item26 < 1 || item6 < 1 || item168 < 1)
+		{
+			return;
+		}
+
+		ES3.Save<int>("Item26", item26 - 1);
+		ES3.Save<int>("Item6", item6 - 1);
+		ES3.Save<int>("Item168", item168 - 1);
+		ES3.Save<int>("Item329", ES3.Load<int>("Item329", defaultValue: 0) + 1);
+		ES3.Save<int>("HPrecovery", -10);
+		ES3.Save<int>("MPrecovery", -10);
+
+
+		AnimatorPlayer();
+		StartCoroutine("On329");
+
+
+	}
+
+	private IEnumerator On329()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(329);//作ったアイテムを表示します。
+		yield return new WaitForSeconds(4.01f);
+		Open329();
+
+	}
+
+	public void Open329()//
+	{
+		ItemCreateint = 329;
+		activeIndices = new int[] { 6, 26, 168 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 4, 3 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	///////////////////////////////////
+	public void ItemCreate327()//リング
+	{
+		int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int item153 = ES3.Load<int>("Item153", defaultValue: 0);
+		int item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int item67 = ES3.Load<int>("Item67", defaultValue: 0);
+
+		if (hpPlayer < 11 || mpPlayer < 10 || item153 < 1 || item174 < 1 || item67 < 1)
+		{
+			return;
+		}
+
+		ES3.Save<int>("Item153", item153 - 1);
+		ES3.Save<int>("Item174", item174 - 1);
+		ES3.Save<int>("Item67", item67 - 1);
+		ES3.Save<int>("Item327", ES3.Load<int>("Item327", defaultValue: 0) + 1);
+		ES3.Save<int>("HPrecovery", -10);
+		ES3.Save<int>("MPrecovery", -10);
+
+
+		AnimatorPlayer();
+		StartCoroutine("On327");
+
+	}
+
+	private IEnumerator On327()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(327);
+		yield return new WaitForSeconds(4.01f);
+		Open327();
+
+	}
+
+	public void Open327()//
+	{
+
+		ItemCreateint = 327;
+		activeIndices = new int[] { 67, 174, 153 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate219()//白銀の剣
+	{
+		int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int item150 = ES3.Load<int>("Item150", defaultValue: 0);
+		int item198 = ES3.Load<int>("Item198", defaultValue: 0);
+		int item290 = ES3.Load<int>("Item290", defaultValue: 0);
+
+		if (hpPlayer >= 11 && mpPlayer >= 10 && item150 >= 1 && item198 >= 1 && item290 >= 1)
+		{
+			ES3.Save<int>("Item150", item150 - 1);
+			ES3.Save<int>("Item198", item198 - 1);
+			ES3.Save<int>("Item290", item290 - 1);
+			ES3.Save<int>("Item219", ES3.Load<int>("Item219", defaultValue: 0) + 1);
+			ES3.Save<int>("HPrecovery", -10);
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();
+			StartCoroutine("On219");
+		}
+
+	}
+
+	private IEnumerator On219()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(219);
+		yield return new WaitForSeconds(4.01f);
+		Open219();
+
+	}
+
+	public void Open219()//
+	{
+		ItemCreateint = 219;
+		activeIndices = new int[] { 150, 198, 290 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	public void ItemCreate218()//氷の剣
+	{
+		int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int item8 = ES3.Load<int>("Item8", defaultValue: 0);
+
+		if (hpPlayer >= 10 && mpPlayer >= 9 && item26 >= 3 && item8 >= 30)
+		{
+			ES3.Save<int>("Item26", item26 - 3);
+			ES3.Save<int>("Item8", item8 - 30);
+			ES3.Save<int>("Item218", ES3.Load<int>("Item218", defaultValue: 0) + 1);
+			ES3.Save<int>("HPrecovery", -10);
+			ES3.Save<int>("MPrecovery", -9);
+
+			AnimatorPlayer();
+			StartCoroutine("On218");
+		}
+	}
+
+	private IEnumerator On218()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(218);
+		yield return new WaitForSeconds(4.01f);
+		Open218();
+
+	}
+
+	public void Open218()//氷の剣
+	{
+		ItemCreateint = 218;
+		activeIndices = new int[] { 8, 26 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate201()//ベルト
+	{
+		int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int item223 = ES3.Load<int>("Item223", defaultValue: 0);
+		int item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int item165 = ES3.Load<int>("Item165", defaultValue: 0);
+
+		if (hpPlayer >= 11 && mpPlayer >= 10 && item223 >= 1 && item174 >= 1 && item165 >= 1)
+		{
+			ES3.Save<int>("Item223", item223 - 1);
+			ES3.Save<int>("Item174", item174 - 1);
+			ES3.Save<int>("Item165", item165 - 1);
+			ES3.Save<int>("Item201", ES3.Load<int>("Item201", defaultValue: 0) + 1);
+			ES3.Save<int>("HPrecovery", -10);
+			ES3.Save<int>("MPrecovery", -10);
+
+			AnimatorPlayer();
+			StartCoroutine("On201");
+		}
+
+	}
+
+	private IEnumerator On201()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(201);
+
+		yield return new WaitForSeconds(4.01f);
+		Open201();
+
+	}
+
+	public void Open201()//
+	{
+		ItemCreateint = 201;
+
+		activeIndices = new int[] { 165, 174, 223 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+
+		itemSuffix = new int[] { 1, 5, 5 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////218   
+	public void ItemCreate192()//赤いポーションLV3
+	{
+		int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int item73 = ES3.Load<int>("Item73", defaultValue: 0);
+		int item324 = ES3.Load<int>("Item324", defaultValue: 0);
+		int item191 = ES3.Load<int>("Item191", defaultValue: 0);
+
+		if (hpPlayer >= 11 && mpPlayer >= 10 && item73 >= 5 && item324 >= 5 && item191 >= 1)
+		{
+			ES3.Save<int>("Item73", item73 - 5);
+			ES3.Save<int>("Item324", item324 - 5);
+			ES3.Save<int>("Item227", ES3.Load<int>("Item227", defaultValue: 0) - 1);
+			ES3.Save<int>("Item192", ES3.Load<int>("Item192", defaultValue: 0) + 1);
+			ES3.Save<int>("HPrecovery", -10);
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();
+			StartCoroutine("On192");
+		}
+
+	}
+
+	private IEnumerator On192()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(192);
+		yield return new WaitForSeconds(4.01f);
+		Open192();
+
+	}
+
+	public void Open192()//
+	{
+		ItemCreateint = 192;
+		activeIndices = new int[] { 73, 227, 324 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+
+		itemSuffix = new int[] { 5, 1, 5 }; //消費数。
+		OpenCrieta();
+	}
+
+	////////////////////////////////// 
+	public void ItemCreate191()//緑ポーションLV3
+	{
+		int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int item74 = ES3.Load<int>("Item74", defaultValue: 0);
+		int item323 = ES3.Load<int>("Item323", defaultValue: 0);
+		int item191 = ES3.Load<int>("Item191", defaultValue: 0);
+
+		if (hpPlayer >= 11 && mpPlayer >= 5 && item74 >= 5 && item323 >= 1 && item191 >= 1)
+		{
+			ES3.Save<int>("Item74", item74 - 5);
+			ES3.Save<int>("Item323", item323 - 5);
+			ES3.Save<int>("Item227", ES3.Load<int>("Item227", defaultValue: 0) - 1);
+			ES3.Save<int>("Item191", item191 + 1);
+			ES3.Save<int>("HPrecovery", -10);
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();
+			StartCoroutine("On191");
+
+		}
+	}
+
+	private IEnumerator On191()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(191);
+		yield return new WaitForSeconds(4.01f);
+		Open191();
+
+	}
+
+	public void Open191()//
+	{
+		ItemCreateint = 191;
+		activeIndices = new int[] { 74, 227, 323 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 5, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	////////////////////////////////// 
+	public void ItemCreate190()//紫ポーションLV3
+	{
+		int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int item70 = ES3.Load<int>("Item70", defaultValue: 0);
+		int item228 = ES3.Load<int>("Item228", defaultValue: 0);
+		int item190 = ES3.Load<int>("Item190", defaultValue: 0);
+
+		if (hpPlayer >= 11 && mpPlayer >= 5 && item70 >= 5 && item228 >= 1 && item190 >= 1)
+		{
+			ES3.Save<int>("Item70", item70 - 5);
+			ES3.Save<int>("Item228", item228 - 5);
+			ES3.Save<int>("Item227", ES3.Load<int>("Item227", defaultValue: 0) - 1);
+			ES3.Save<int>("Item190", item190 + 1);
+			ES3.Save<int>("HPrecovery", -10);
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();
+			StartCoroutine("On190");
+
+		}
+
+	}
+
+	private IEnumerator On190()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(190);
+		yield return new WaitForSeconds(4.01f);
+		Open190();
+
+	}
+
+	public void Open190()//
+	{
+		ItemCreateint = 190;
+		activeIndices = new int[] { 70, 227, 228 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 1, 5 }; //消費数。
+		OpenCrieta();
+	}
+
+	//////////////////////////////////
+
+	public void ItemCreate179()///赤色のポーションLV1 鍛冶 HP回復
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item6 = ES3.Load<int>("Item6", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item6 >= 5 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item6", Item6 - 5);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item179 = ES3.Load<int>("Item179", defaultValue: 0);
+			ES3.Save<int>("Item179", Item179 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On179");
+
+		}
+	}
+
+	private IEnumerator On179()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(179);
+		yield return new WaitForSeconds(4.01f);
+		Open179();
+
+	}
+
+	public void Open179()//
+	{
+		ItemCreateint = 179;
+		activeIndices = new int[] { 6, 251 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate178()//緑色のポーションLV1 鍛冶 HP回復
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item32 = ES3.Load<int>("Item32", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item32 >= 6 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item32", Item32 - 6);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item178 = ES3.Load<int>("Item178", defaultValue: 0);
+			ES3.Save<int>("Item178", Item178 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On178");
+
+		}
+	}
+
+	private IEnumerator On178()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(178);
+		yield return new WaitForSeconds(4.01f);
+		Open178();
+
+	}
+
+	public void Open178()//
+	{
+		ItemCreateint = 178;
+		activeIndices = new int[] { 32, 251 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 6, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate177()//青い色のポーションLV1 鍛冶 HP回復
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item8 = ES3.Load<int>("Item8", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item8 >= 3 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item8", Item8 - 3);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item177 = ES3.Load<int>("Item177", defaultValue: 0);
+			ES3.Save<int>("Item177", Item177 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On177");
+
+		}
+	}
+
+	private IEnumerator On177()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(177);
+		yield return new WaitForSeconds(4.01f);
+		Open177();
+
+	}
+
+	public void Open177()//
+	{
+		ItemCreateint = 177;
+		activeIndices = new int[] { 8, 251 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate174()//青いポーション レア
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item322 = ES3.Load<int>("Item322", defaultValue: 0);
+		int Item69 = ES3.Load<int>("Item69", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 5 && Item322 >= 5 && Item69 >= 1 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item322", Item322 - 5);
+			ES3.Save<int>("Item69", Item69 - 5);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+			ES3.Save<int>("Item174", Item174 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On174");
+
+		}
+	}
+
+	private IEnumerator On174()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(174);
+		yield return new WaitForSeconds(4.01f);
+		Open174();
+
+	}
+
+	public void Open174()//
+	{
+		ItemCreateint = 174;
+		activeIndices = new int[] { 69, 251, 322 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 1, 5 }; //消費数。
+		OpenCrieta();
+	}
+
+	//////////////////////////////////
+
+
+	public void ItemCreate168()//赤いポーションLV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item66 = ES3.Load<int>("Item66", defaultValue: 0);
+		int Item143 = ES3.Load<int>("Item143", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 5 && Item66 >= 5 && Item143 >= 1 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item66", Item66 - 5);
+			ES3.Save<int>("Item143", Item143 - 5);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item168 = ES3.Load<int>("Item168", defaultValue: 0);
+			ES3.Save<int>("Item168", Item168 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On168");
+
+		}
+	}
+
+	private IEnumerator On168()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(168);
+		yield return new WaitForSeconds(4.01f);
+		Open168();
+
+	}
+
+	public void Open168()//
+	{
+		ItemCreateint = 168;
+		activeIndices = new int[] { 66, 143, 251 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 5, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	//////////////////////////////////
+
+	public void ItemCreate167()//青い色のポーションLV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item67 = ES3.Load<int>("Item67", defaultValue: 0);
+		int Item325 = ES3.Load<int>("Item325", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 3 && Item67 >= 8 && Item325 >= 1 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item67", Item67 - 3);
+			ES3.Save<int>("Item325", Item325 - 8);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item166 = ES3.Load<int>("Item166", defaultValue: 0);
+			ES3.Save<int>("Item166", Item166 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On167");
+
+		}
+	}
+
+	private IEnumerator On167()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(167);
+		yield return new WaitForSeconds(4.01f);
+		Open167();
+
+	}
+
+	public void Open167()//
+	{
+		ItemCreateint = 167;
+		activeIndices = new int[] { 67, 251, 325 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3, 1, 8 }; //消費数。
+		OpenCrieta();
+	}
+
+	//////////////////////////////////
+	public void ItemCreate166()//水色のポーションLV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item67 = ES3.Load<int>("Item67", defaultValue: 0);
+		int Item256 = ES3.Load<int>("Item256", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 3 && Item67 >= 8 && Item256 >= 1 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item67", Item67 - 3);
+			ES3.Save<int>("Item256", Item256 - 8);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item166 = ES3.Load<int>("Item166", defaultValue: 0);
+			ES3.Save<int>("Item166", Item166 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On166");
+
+		}
+	}
+	private IEnumerator On166()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(166);
+		yield return new WaitForSeconds(4.01f);
+		Open166();
+
+	}
+
+	public void Open166()//
+	{
+		ItemCreateint = 166;
+		activeIndices = new int[] { 67, 251, 256 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3, 1, 8 }; //消費数。
+		OpenCrieta();
+	}
+
+	//////////////////////////////////
+
+	public void ItemCreate165()//黄色のポーションLV2 鍛冶 HP回復
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item321 = ES3.Load<int>("Item321", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item321 >= 7 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item321", Item321 - 7);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item165 = ES3.Load<int>("Item165", defaultValue: 0);
+			ES3.Save<int>("Item165", Item165 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On165");
+
+		}
+	}
+
+	private IEnumerator On165()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(165);
+		yield return new WaitForSeconds(4.01f);
+		Open165();
+
+	}
+
+	public void Open165()//
+	{
+		ItemCreateint = 165;
+		activeIndices = new int[] { 251, 321 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 7 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate164()//虹色のポーションLV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item68 = ES3.Load<int>("Item68", defaultValue: 0);
+		int Item290 = ES3.Load<int>("Item290", defaultValue: 0);
+		int Item198 = ES3.Load<int>("Item198", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item68 >= 1 && Item290 >= 1 && Item198 >= 1)
+		{
+			ES3.Save<int>("Item68", Item68 - 1);
+			ES3.Save<int>("Item290", Item290 - 1);
+			ES3.Save<int>("Item198", Item198 - 1);
+
+			int Item164 = ES3.Load<int>("Item164", defaultValue: 0);
+			ES3.Save<int>("Item164", Item164 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On164");
+
+		}
+	}
+
+	private IEnumerator On164()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(164);
+		yield return new WaitForSeconds(4.01f);
+		Open164();
+
+	}
+
+	public void Open164()//
+	{
+		ItemCreateint = 164;
+		activeIndices = new int[] { 68, 198, 290 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	//////////////////////////////////
+	public void ItemCreate155()//紫のポーションLV2 鍛冶 HP回復
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item254 = ES3.Load<int>("Item254", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item254 >= 3 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item254", Item254 - 3);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item155 = ES3.Load<int>("Item155", defaultValue: 0);
+			ES3.Save<int>("Item155", Item155 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On155");
+
+		}
+	}
+
+	private IEnumerator On155()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(155);
+		yield return new WaitForSeconds(4.01f);
+		Open155();
+
+	}
+
+	public void Open155()//
+	{
+		ItemCreateint = 155;
+		activeIndices = new int[] { 251, 254 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 3 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate154()//緑のポーションLV2 鍛冶 HP回復
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item253 = ES3.Load<int>("Item253", defaultValue: 0);
+		int Item251 = ES3.Load<int>("Item251", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item253 >= 3 && Item251 >= 1)
+		{
+			ES3.Save<int>("Item253", Item253 - 3);
+			ES3.Save<int>("Item251", Item251 - 1);
+
+			int Item154 = ES3.Load<int>("Item154", defaultValue: 0);
+			ES3.Save<int>("Item154", Item154 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On154");
+
+		}
+	}
+
+	private IEnumerator On154()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(154);
+		yield return new WaitForSeconds(4.01f);
+		Open154();
+
+	}
+
+	public void Open154()//
+	{
+		ItemCreateint = 154;
+		activeIndices = new int[] { 251, 253 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 3 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate153()//インゴットLV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item248 = ES3.Load<int>("Item248", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item248 >= 20)
+		{
+			ES3.Save<int>("Item248", Item248 - 20);
+
+			int Item153 = ES3.Load<int>("Item153", defaultValue: 0);
+			ES3.Save<int>("Item153", Item153 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On153");
+
+		}
+	}
+
+	private IEnumerator On153()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(153);
+		yield return new WaitForSeconds(4.01f);
+		Open153();
+
+	}
+
+	public void Open153()//
+	{
+		ItemCreateint = 153;
+
+		activeIndices = new int[] { 248 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 20 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate152()//赤いインゴットLV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item240 = ES3.Load<int>("Item240", defaultValue: 0);
+		int Item211 = ES3.Load<int>("Item211", defaultValue: 0);
+		int Item73 = ES3.Load<int>("Item73", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item240 >= 33 && Item211 >= 1 && Item73 >= 65)
+		{
+			ES3.Save<int>("Item240", Item240 - 33);
+			ES3.Save<int>("Item211", Item211 - 1);
+			ES3.Save<int>("Item73", Item73 - 65);
+
+			int Item152 = ES3.Load<int>("Item152", defaultValue: 0);
+			ES3.Save<int>("Item152", Item152 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On152");
+
+		}
+	}
+
+	private IEnumerator On152()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(152);
+		yield return new WaitForSeconds(4.01f);
+		Open152();
+
+	}
+
+	public void Open152()//
+	{
+		ItemCreateint = 152;
+		activeIndices = new int[] { 73, 211, 240 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 65, 1, 33 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////219
+	public void ItemCreate151()//氷のインゴットLV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item240 = ES3.Load<int>("Item240", defaultValue: 0);
+		int Item241 = ES3.Load<int>("Item241", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item240 >= 6 && Item241 >= 7 && Item61 >= 35)
+		{
+			ES3.Save<int>("Item240", Item240 - 6);
+			ES3.Save<int>("Item241", Item241 - 7);
+			ES3.Save<int>("Item61", Item61 - 35);
+
+			int Item151 = ES3.Load<int>("Item151", defaultValue: 0);
+			ES3.Save<int>("Item151", Item151 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On151");
+
+		}
+	}
+
+	private IEnumerator On151()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(151);
+		yield return new WaitForSeconds(4.01f);
+		Open151();
+
+	}
+
+	public void Open151()//
+	{
+		ItemCreateint = 151;
+		activeIndices = new int[] { 61, 240, 241 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 35, 6, 7 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate150()//白銀のインゴット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item240 = ES3.Load<int>("Item240", defaultValue: 0);
+		int Item241 = ES3.Load<int>("Item241", defaultValue: 0);
+		int Item246 = ES3.Load<int>("Item246", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item240 >= 3 && Item241 >= 3 && Item246 >= 1)
+		{
+			ES3.Save<int>("Item240", Item240 - 3);
+			ES3.Save<int>("Item241", Item241 - 3);
+			ES3.Save<int>("Item246", Item246 - 1);
+
+			int Item150 = ES3.Load<int>("Item150", defaultValue: 0);
+			ES3.Save<int>("Item150", Item150 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On150");
+
+		}
+	}
+
+	private IEnumerator On150()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(150);
+		yield return new WaitForSeconds(4.01f);
+		Open150();
+
+	}
+
+	public void Open150()//
+	{
+		ItemCreateint = 150;
+		activeIndices = new int[] { 240, 241, 246 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3, 3, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate149()//緑のインゴットLV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item227 = ES3.Load<int>("Item227", defaultValue: 0);
+		int Item253 = ES3.Load<int>("Item253", defaultValue: 0);
+		int Item74 = ES3.Load<int>("Item74", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item227 >= 3 && Item253 >= 2 && Item74 >= 15)
+		{
+			ES3.Save<int>("Item227", Item227 - 3);
+			ES3.Save<int>("Item253", Item253 - 2);
+			ES3.Save<int>("Item74", Item74 - 15);
+
+			int Item149 = ES3.Load<int>("Item149", defaultValue: 0);
+			ES3.Save<int>("Item149", Item149 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On149");
+
+		}
+	}
+
+	private IEnumerator On149()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(149);
+		yield return new WaitForSeconds(4.01f);
+		Open149();
+
+	}
+
+	public void Open149()//
+	{
+		ItemCreateint = 149;
+		activeIndices = new int[] { 74, 227, 253 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 15, 3, 2 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate148()//黒いインゴット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item227 = ES3.Load<int>("Item227", defaultValue: 0);
+		int Item228 = ES3.Load<int>("Item228", defaultValue: 0);
+		int Item231 = ES3.Load<int>("Item231", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item227 >= 3 && Item228 >= 1 && Item231 >= 1)
+		{
+			ES3.Save<int>("Item227", Item227 - 3);
+			ES3.Save<int>("Item228", Item228 - 1);
+			ES3.Save<int>("Item231", Item231 - 1);
+
+			int Item148 = ES3.Load<int>("Item148", defaultValue: 0);
+			ES3.Save<int>("Item148", Item148 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On148");
+
+		}
+	}
+
+	private IEnumerator On148()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(148);
+		yield return new WaitForSeconds(4.01f);
+		Open148();
+
+	}
+
+	public void Open148()//
+	{
+		ItemCreateint = 148;
+		activeIndices = new int[] { 227, 228, 231 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////219
+	public void ItemCreate146()//氷のインゴット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item17 = ES3.Load<int>("Item17", defaultValue: 0);
+		int Item8 = ES3.Load<int>("Item8", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item17 >= 25 && Item8 >= 25)
+		{
+			ES3.Save<int>("Item17", Item17 - 25);
+			ES3.Save<int>("Item8", Item8 - 25);
+
+			int Item146 = ES3.Load<int>("Item146", defaultValue: 0);
+			ES3.Save<int>("Item146", Item146 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On146");
+
+		}
+	}
+
+	private IEnumerator On146()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(146);
+		yield return new WaitForSeconds(4.01f);
+		Open146();
+
+	}
+
+	public void Open146()//
+	{
+		ItemCreateint = 146;
+		activeIndices = new int[] { 8, 17 }; //2個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 25, 25 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate143()//赤いインゴット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item17 = ES3.Load<int>("Item17", defaultValue: 0);
+		int Item6 = ES3.Load<int>("Item6", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item17 >= 50 && Item6 >= 35)
+		{
+			ES3.Save<int>("Item17", Item17 - 50);
+			ES3.Save<int>("Item6", Item6 - 35);
+
+			int Item143 = ES3.Load<int>("Item143", defaultValue: 0);
+			ES3.Save<int>("Item143", Item143 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On143");
+
+		}
+	}
+
+	private IEnumerator On143()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(143);
+		yield return new WaitForSeconds(4.01f);
+		Open143();
+
+	}
+
+	public void Open143()//
+	{
+		ItemCreateint = 143;
+		activeIndices = new int[] { 6, 17 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 35, 50 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate142()//緑のインゴット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item17 = ES3.Load<int>("Item17", defaultValue: 0);
+		int Item32 = ES3.Load<int>("Item32", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item17 >= 10 && Item32 >= 15)
+		{
+			ES3.Save<int>("Item17", Item17 - 10);
+			ES3.Save<int>("Item32", Item32 - 10);
+
+			int Item142 = ES3.Load<int>("Item142", defaultValue: 0);
+			ES3.Save<int>("Item142", Item142 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On142");
+
+		}
+	}
+
+	private IEnumerator On142()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(142);
+		yield return new WaitForSeconds(4.01f);
+		Open142();
+
+	}
+
+	public void Open142()//
+	{
+		ItemCreateint = 142;
+		activeIndices = new int[] { 17, 32 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10, 10 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate141()//紫のインゴット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item17 = ES3.Load<int>("Item17", defaultValue: 0);
+		int Item7 = ES3.Load<int>("Item7", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item17 >= 10 && Item7 >= 15)
+		{
+			ES3.Save<int>("Item17", Item17 - 10);
+			ES3.Save<int>("Item7", Item7 - 15);
+
+			int Item141 = ES3.Load<int>("Item141", defaultValue: 0);
+			ES3.Save<int>("Item141", Item141 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On141");
+
+		}
+	}
+
+	private IEnumerator On141()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(141);
+		yield return new WaitForSeconds(4.01f);
+		Open141();
+
+	}
+
+	public void Open141()//
+	{
+		ItemCreateint = 141;
+		activeIndices = new int[] { 7, 17 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 15, 10 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate138()//リング
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item147 = ES3.Load<int>("Item147", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item74 = ES3.Load<int>("Item74", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item147 >= 1 && Item174 >= 1 && Item74 >= 1)
+		{
+			ES3.Save<int>("Item147", Item147 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item74", Item74 - 1);
+
+			int Item138 = ES3.Load<int>("Item138", defaultValue: 0);
+			ES3.Save<int>("Item138", Item138 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On138");
+
+		}
+	}
+
+	private IEnumerator On138()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(138);
+		yield return new WaitForSeconds(4.01f);
+		Open138();
+
+	}
+
+	public void Open138()//
+	{
+		ItemCreateint = 138;
+		activeIndices = new int[] { 74, 147, 174 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate128()//リング
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item325 = ES3.Load<int>("Item325", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int Item176 = ES3.Load<int>("Item176", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item325 >= 1 && Item26 >= 1 && Item176 >= 1)
+		{
+			ES3.Save<int>("Item325", Item325 - 1);
+			ES3.Save<int>("Item26", Item26 - 1);
+			ES3.Save<int>("Item176", Item176 - 1);
+
+			int Item128 = ES3.Load<int>("Item128", defaultValue: 0);
+			ES3.Save<int>("Item128", Item128 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On128");
+
+		}
+	}
+
+	private IEnumerator On128()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(128);
+		yield return new WaitForSeconds(4.01f);
+		Open128();
+
+	}
+
+	public void Open128()//
+	{
+		ItemCreateint = 128;
+		activeIndices = new int[] { 26, 177, 325 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate127()//パンツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item301 = ES3.Load<int>("Item301", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item302 = ES3.Load<int>("Item302", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item301 >= 1 && Item174 >= 1 && Item302 >= 1)
+		{
+			ES3.Save<int>("Item301", Item301 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item302", Item302 - 1);
+
+			int Item127 = ES3.Load<int>("Item127", defaultValue: 0);
+			ES3.Save<int>("Item127", Item127 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On127");
+
+		}
+	}
+
+	private IEnumerator On127()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(127);
+		yield return new WaitForSeconds(4.01f);
+		Open127();
+
+	}
+
+	public void Open127()//
+	{
+		ItemCreateint = 127;
+		activeIndices = new int[] { 174, 301, 302 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	///////////////////////////////////
+	public void ItemCreate125()//パンツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item300 = ES3.Load<int>("Item300", defaultValue: 0);
+		int Item189 = ES3.Load<int>("Item189", defaultValue: 0);
+		int Item73 = ES3.Load<int>("Item73", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item300 >= 1 && Item189 >= 1 && Item73 >= 1)
+		{
+			ES3.Save<int>("Item300", Item300 - 1);
+			ES3.Save<int>("Item189", Item189 - 1);
+			ES3.Save<int>("Item73", Item73 - 1);
+
+			int Item125 = ES3.Load<int>("Item125", defaultValue: 0);
+			ES3.Save<int>("Item125", Item125 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On125");
+
+		}
+	}
+
+	private IEnumerator On125()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(125);
+		yield return new WaitForSeconds(4.01f);
+		Open125();
+
+	}
+
+	public void Open125()//
+	{
+		ItemCreateint = 125;
+		activeIndices = new int[] { 73, 189, 300 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate124()//パンツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item301 = ES3.Load<int>("Item301", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item301 >= 1 && Item174 >= 1 && Item61 >= 1)
+		{
+			ES3.Save<int>("Item301", Item301 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item61", Item61 - 1);
+
+			int Item124 = ES3.Load<int>("Item124", defaultValue: 0);
+			ES3.Save<int>("Item124", Item124 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On124");
+
+		}
+	}
+
+	private IEnumerator On124()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(124);
+		yield return new WaitForSeconds(4.01f);
+		Open124();
+
+	}
+
+	public void Open124()//
+	{
+		ItemCreateint = 124;
+		activeIndices = new int[] { 61, 174, 301 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate123()//パンツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item222 = ES3.Load<int>("Item222", defaultValue: 0);
+		int Item142 = ES3.Load<int>("Item142", defaultValue: 0);
+		int Item188 = ES3.Load<int>("Item188", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item222 >= 1 && Item142 >= 1 && Item188 >= 1)
+		{
+			ES3.Save<int>("Item222", Item222 - 1);
+			ES3.Save<int>("Item142", Item142 - 1);
+			ES3.Save<int>("Item188", Item188 - 1);
+
+			int Item123 = ES3.Load<int>("Item123", defaultValue: 0);
+			ES3.Save<int>("Item123", Item123 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On123");
+
+		}
+	}
+
+	private IEnumerator On123()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(123);
+		yield return new WaitForSeconds(4.01f);
+		Open123();
+
+	}
+
+	public void Open123()//
+	{
+		ItemCreateint = 123;
+		activeIndices = new int[] { 142, 188, 222 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate121()//パンツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int Item240 = ES3.Load<int>("Item240", defaultValue: 0);
+		int Item166 = ES3.Load<int>("Item166", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item26 >= 1 && Item240 >= 1 && Item166 >= 1)
+		{
+			ES3.Save<int>("Item26", Item26 - 1);
+			ES3.Save<int>("Item240", Item240 - 1);
+			ES3.Save<int>("Item166", Item166 - 1);
+
+			int Item121 = ES3.Load<int>("Item121", defaultValue: 0);
+			ES3.Save<int>("Item121", Item121 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On121");
+
+		}
+	}
+
+	private IEnumerator On121()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(121);
+		yield return new WaitForSeconds(4.01f);
+		Open121();
+
+	}
+
+	public void Open121()//
+	{
+		ItemCreateint = 121;
+		activeIndices = new int[] { 26, 166, 240 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate120()//パンツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item300 = ES3.Load<int>("Item300", defaultValue: 0);
+		int Item168 = ES3.Load<int>("Item168", defaultValue: 0);
+		int Item66 = ES3.Load<int>("Item66", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item300 >= 1 && Item168 >= 1 && Item66 >= 1)
+		{
+			ES3.Save<int>("Item300", Item300 - 1);
+			ES3.Save<int>("Item168", Item168 - 1);
+			ES3.Save<int>("Item66", Item66 - 1);
+
+			int Item120 = ES3.Load<int>("Item120", defaultValue: 0);
+			ES3.Save<int>("Item120", Item120 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On120");
+
+		}
+	}
+
+	private IEnumerator On120()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(120);
+		yield return new WaitForSeconds(4.01f);
+		Open120();
+
+	}
+
+	public void Open120()//
+	{
+		ItemCreateint = 120;
+		activeIndices = new int[] { 66, 168, 300 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate119()//リング
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item217 = ES3.Load<int>("Item217", defaultValue: 0);
+		int Item179 = ES3.Load<int>("Item179", defaultValue: 0);
+		int Item6 = ES3.Load<int>("Item6", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item217 >= 1 && Item179 >= 1 && Item6 >= 1)
+		{
+			ES3.Save<int>("Item217", Item217 - 1);
+			ES3.Save<int>("Item179", Item179 - 1);
+			ES3.Save<int>("Item6", Item6 - 1);
+
+			int Item119 = ES3.Load<int>("Item119", defaultValue: 0);
+			ES3.Save<int>("Item119", Item119 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On119");
+
+		}
+	}
+
+	private IEnumerator On119()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(119);
+		yield return new WaitForSeconds(4.01f);
+		Open119();
+
+	}
+
+	public void Open119()//
+	{
+		ItemCreateint = 119;
+		activeIndices = new int[] { 6, 179, 217 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate118()//ヘルメット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item301 = ES3.Load<int>("Item301", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item301 >= 1 && Item174 >= 1 && Item61 >= 1)
+		{
+			ES3.Save<int>("Item301", Item301 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item61", Item61 - 1);
+
+			int Item118 = ES3.Load<int>("Item118", defaultValue: 0);
+			ES3.Save<int>("Item118", Item118 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On118");
+
+		}
+	}
+
+	private IEnumerator On118()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(118);
+		yield return new WaitForSeconds(4.01f);
+		Open118();
+
+	}
+
+	public void Open118()//
+	{
+		ItemCreateint = 118;
+		activeIndices = new int[] { 61, 174, 301 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate117()//ヘルメット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item300 = ES3.Load<int>("Item300", defaultValue: 0);
+		int Item168 = ES3.Load<int>("Item168", defaultValue: 0);
+		int Item66 = ES3.Load<int>("Item66", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item300 >= 1 && Item168 >= 1 && Item66 >= 1)
+		{
+			ES3.Save<int>("Item300", Item300 - 1);
+			ES3.Save<int>("Item168", Item168 - 1);
+			ES3.Save<int>("Item66", Item66 - 1);
+
+			int Item117 = ES3.Load<int>("Item117", defaultValue: 0);
+			ES3.Save<int>("Item117", Item117 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On117");
+
+		}
+	}
+
+	private IEnumerator On117()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(117);
+		yield return new WaitForSeconds(4.01f);
+		Open117();
+
+	}
+
+	public void Open117()//
+	{
+		ItemCreateint = 117;
+		activeIndices = new int[] { 66, 168, 300 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate116()//ヘルメット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item301 = ES3.Load<int>("Item301", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item301 >= 1 && Item174 >= 1 && Item61 >= 1)
+		{
+			ES3.Save<int>("Item301", Item301 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item61", Item61 - 1);
+
+			int Item116 = ES3.Load<int>("Item116", defaultValue: 0);
+			ES3.Save<int>("Item116", Item116 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On116");
+
+		}
+	}
+
+	private IEnumerator On116()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(116);
+		yield return new WaitForSeconds(4.01f);
+		Open116();
+
+	}
+
+	public void Open116()//
+	{
+		ItemCreateint = 116;
+		activeIndices = new int[] { 61, 174, 301 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate115()//ヘルメット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item153 = ES3.Load<int>("Item153", defaultValue: 0);
+		int Item165 = ES3.Load<int>("Item165", defaultValue: 0);
+		int Item17 = ES3.Load<int>("Item17", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item153 >= 1 && Item165 >= 1 && Item17 >= 1)
+		{
+			ES3.Save<int>("Item153", Item153 - 1);
+			ES3.Save<int>("Item165", Item165 - 1);
+			ES3.Save<int>("Item17", Item17 - 1);
+
+			int Item115 = ES3.Load<int>("Item115", defaultValue: 0);
+			ES3.Save<int>("Item115", Item115 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On115");
+
+		}
+	}
+
+	private IEnumerator On115()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(115);
+		yield return new WaitForSeconds(4.01f);
+		Open115();
+
+	}
+
+	public void Open115()//
+	{
+		ItemCreateint = 115;
+		activeIndices = new int[] { 17, 153, 165 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate114()//ヘルメット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item301 = ES3.Load<int>("Item301", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item301 >= 1 && Item174 >= 1 && Item61 >= 1)
+		{
+			ES3.Save<int>("Item301", Item301 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item61", Item61 - 1);
+
+			int Item114 = ES3.Load<int>("Item114", defaultValue: 0);
+			ES3.Save<int>("Item114", Item114 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On114");
+
+		}
+	}
+
+	private IEnumerator On114()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(114);
+		yield return new WaitForSeconds(4.01f);
+		Open114();
+
+	}
+
+	public void Open114()//
+	{
+		ItemCreateint = 114;
+		activeIndices = new int[] { 62, 174, 301 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate113()//ヘルメット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item153 = ES3.Load<int>("Item153", defaultValue: 0);
+		int Item147 = ES3.Load<int>("Item147", defaultValue: 0);
+		int Item18 = ES3.Load<int>("Item18", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item153 >= 1 && Item147 >= 1 && Item18 >= 1)
+		{
+			ES3.Save<int>("Item153", Item153 - 1);
+			ES3.Save<int>("Item147", Item147 - 1);
+			ES3.Save<int>("Item18", Item18 - 1);
+
+			int Item113 = ES3.Load<int>("Item113", defaultValue: 0);
+			ES3.Save<int>("Item113", Item113 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On113");
+
+		}
+	}
+
+	private IEnumerator On113()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(113);
+		yield return new WaitForSeconds(4.01f);
+		Open113();
+
+	}
+
+	public void Open113()//
+	{
+		ItemCreateint = 113;
+		activeIndices = new int[] { 18, 147, 153 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	///////////////////////////////////
+	public void ItemCreate112()//ヘルメット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int Item147 = ES3.Load<int>("Item147", defaultValue: 0);
+		int Item32 = ES3.Load<int>("Item32", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item26 >= 1 && Item147 >= 1 && Item32 >= 1)
+		{
+			ES3.Save<int>("Item26", Item26 - 1);
+			ES3.Save<int>("Item147", Item147 - 1);
+			ES3.Save<int>("Item32", Item32 - 1);
+
+			int Item112 = ES3.Load<int>("Item112", defaultValue: 0);
+			ES3.Save<int>("Item112", Item112 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On112");
+
+		}
+	}
+
+	private IEnumerator On112()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(112);
+		yield return new WaitForSeconds(4.01f);
+		Open112();
+
+	}
+
+	public void Open112()//
+	{
+		ItemCreateint = 112;
+		activeIndices = new int[] { 26, 32, 147 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate111()//ヘルメット
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item300 = ES3.Load<int>("Item300", defaultValue: 0);
+		int Item182 = ES3.Load<int>("Item182", defaultValue: 0);
+		int Item66 = ES3.Load<int>("Item66", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item300 >= 1 && Item182 >= 1 && Item66 >= 1)
+		{
+			ES3.Save<int>("Item300", Item300 - 1);
+			ES3.Save<int>("Item182", Item182 - 1);
+			ES3.Save<int>("Item66", Item66 - 1);
+
+			int Item111 = ES3.Load<int>("Item111", defaultValue: 0);
+			ES3.Save<int>("Item111", Item111 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On111");
+
+		}
+	}
+
+	private IEnumerator On111()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(111);
+		yield return new WaitForSeconds(4.01f);
+		Open111();
+
+	}
+
+	public void Open111()//
+	{
+		ItemCreateint = 111;
+		activeIndices = new int[] { 66, 182, 300 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate110()//手袋
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item217 = ES3.Load<int>("Item217", defaultValue: 0);
+		int Item179 = ES3.Load<int>("Item179", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item217 >= 1 && Item179 >= 1)
+		{
+			ES3.Save<int>("Item217", Item217 - 1);
+			ES3.Save<int>("Item179", Item179 - 1);
+
+			int Item110 = ES3.Load<int>("Item110", defaultValue: 0);
+			ES3.Save<int>("Item110", Item110 + 1);
+
+			ES3.Save<int>("HPrecovery", -4);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On110");
+
+		}
+	}
+
+	private IEnumerator On110()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(110);
+		yield return new WaitForSeconds(4.01f);
+		Open110();
+
+	}
+	public void Open110()//
+	{
+		ItemCreateint = 110;
+		activeIndices = new int[] { 179, 217 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate109()//手袋
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item223 = ES3.Load<int>("Item223", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item223 >= 1 && Item174 >= 1 && Item61 >= 1)
+		{
+			ES3.Save<int>("Item223", Item223 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item61", Item61 - 1);
+
+			int Item109 = ES3.Load<int>("Item109", defaultValue: 0);
+			ES3.Save<int>("Item109", Item109 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On109");
+
+		}
+	}
+
+	private IEnumerator On109()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(109);
+		yield return new WaitForSeconds(4.01f);
+		Open109();
+
+	}
+
+	public void Open109()//
+	{
+		ItemCreateint = 109;
+		activeIndices = new int[] { 61, 174, 223 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate108()//手袋
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item151 = ES3.Load<int>("Item151", defaultValue: 0);
+		int Item168 = ES3.Load<int>("Item168", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item151 >= 1 && Item168 >= 1 && Item61 >= 1)
+		{
+			ES3.Save<int>("Item151", Item151 - 1);
+			ES3.Save<int>("Item168", Item168 - 1);
+			ES3.Save<int>("Item61", Item61 - 1);
+
+			int Item108 = ES3.Load<int>("Item108", defaultValue: 0);
+			ES3.Save<int>("Item108", Item108 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On108");
+
+		}
+	}
+
+	private IEnumerator On108()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(108);
+		yield return new WaitForSeconds(4.01f);
+		Open108();
+
+	}
+
+	public void Open108()//
+	{
+		ItemCreateint = 108;
+		activeIndices = new int[] { 61, 151, 168 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate107()//手袋
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item223 = ES3.Load<int>("Item223", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item223 >= 1 && Item174 >= 1 && Item61 >= 1)
+		{
+			ES3.Save<int>("Item223", Item223 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item61", Item61 - 1);
+
+			int Item107 = ES3.Load<int>("Item107", defaultValue: 0);
+			ES3.Save<int>("Item107", Item107 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On107");
+
+		}
+	}
+
+	private IEnumerator On107()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(107);
+		yield return new WaitForSeconds(4.01f);
+		Open107();
+
+	}
+
+	public void Open107()//
+	{
+		ItemCreateint = 107;
+		activeIndices = new int[] { 61, 174, 223 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate105()//手袋
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item153 = ES3.Load<int>("Item153", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item67 = ES3.Load<int>("Item67", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item153 >= 1 && Item174 >= 1 && Item67 >= 1)
+		{
+			ES3.Save<int>("Item153", Item153 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item67", Item67 - 1);
+
+			int Item105 = ES3.Load<int>("Item105", defaultValue: 0);
+			ES3.Save<int>("Item105", Item105 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On105");
+
+		}
+	}
+
+	private IEnumerator On105()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(105);
+		yield return new WaitForSeconds(4.01f);
+		Open105();
+
+	}
+
+	public void Open105()//
+	{
+		ItemCreateint = 105;
+		activeIndices = new int[] { 67, 153, 174 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate104()//手袋
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item300 = ES3.Load<int>("Item300", defaultValue: 0);
+		int Item153 = ES3.Load<int>("Item153", defaultValue: 0);
+		int Item189 = ES3.Load<int>("Item189", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item300 >= 1 && Item153 >= 1 && Item189 >= 1)
+		{
+			ES3.Save<int>("Item300", Item300 - 1);
+			ES3.Save<int>("Item153", Item153 - 1);
+			ES3.Save<int>("Item189", Item189 - 1);
+
+			int Item104 = ES3.Load<int>("Item104", defaultValue: 0);
+			ES3.Save<int>("Item104", Item104 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On104");
+
+		}
+	}
+
+	private IEnumerator On104()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(104);
+		yield return new WaitForSeconds(4.01f);
+		Open104();
+
+	}
+
+	public void Open104()//
+	{
+		ItemCreateint = 104;
+		activeIndices = new int[] { 153, 189, 300 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+	///////////////////////////////////
+	public void ItemCreate103()//手袋
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item217 = ES3.Load<int>("Item217", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int Item173 = ES3.Load<int>("Item173", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item217 >= 1 && Item26 >= 1 && Item173 >= 1)
+		{
+			ES3.Save<int>("Item217", Item217 - 1);
+			ES3.Save<int>("Item26", Item26 - 1);
+			ES3.Save<int>("Item173", Item173 - 1);
+
+			int Item103 = ES3.Load<int>("Item103", defaultValue: 0);
+			ES3.Save<int>("Item103", Item103 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On103");
+
+		}
+	}
+
+	private IEnumerator On103()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(103);
+		yield return new WaitForSeconds(4.01f);
+		Open103();
+
+	}
+
+	public void Open103()//
+	{
+		ItemCreateint = 103;
+		activeIndices = new int[] { 26, 173, 217 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate100()//手袋
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item217 = ES3.Load<int>("Item217", defaultValue: 0);
+		int Item179 = ES3.Load<int>("Item179", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item217 >= 1 && Item179 >= 1)
+		{
+			ES3.Save<int>("Item217", Item217 - 1);
+			ES3.Save<int>("Item179", Item179 - 1);
+
+			int Item100 = ES3.Load<int>("Item100", defaultValue: 0);
+			ES3.Save<int>("Item100", Item100 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On100");
+
+		}
+	}
+
+	private IEnumerator On100()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(100);
+		yield return new WaitForSeconds(4.01f);
+		Open100();
+
+	}
+
+	public void Open100()//
+	{
+		ItemCreateint = 100;
+		activeIndices = new int[] { 179, 217 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate97()//ブーツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item233 = ES3.Load<int>("Item233", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+		int Item69 = ES3.Load<int>("Item69", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item233 >= 1 && Item174 >= 1 && Item69 >= 1)
+		{
+			ES3.Save<int>("Item233", Item233 - 1);
+			ES3.Save<int>("Item174", Item174 - 1);
+			ES3.Save<int>("Item69", Item69 - 1);
+
+			int Item97 = ES3.Load<int>("Item97", defaultValue: 0);
+			ES3.Save<int>("Item97", Item97 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On97");
+
+		}
+	}
+
+	private IEnumerator On97()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(97);
+		yield return new WaitForSeconds(4.01f);
+		Open97();
+
+	}
+
+	public void Open97()//
+	{
+		ItemCreateint = 97;
+		activeIndices = new int[] { 69, 174, 233 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate96()//ブーツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item301 = ES3.Load<int>("Item301", defaultValue: 0);
+		int Item167 = ES3.Load<int>("Item167", defaultValue: 0);
+		int Item67 = ES3.Load<int>("Item67", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item301 >= 1 && Item167 >= 1 && Item67 >= 1)
+		{
+			ES3.Save<int>("Item301", Item301 - 1);
+			ES3.Save<int>("Item167", Item167 - 1);
+			ES3.Save<int>("Item67", Item67 - 1);
+
+			int Item96 = ES3.Load<int>("Item96", defaultValue: 0);
+			ES3.Save<int>("Item96", Item96 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On96");
+
+		}
+	}
+
+	private IEnumerator On96()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(96);
+		yield return new WaitForSeconds(4.01f);
+		Open96();
+
+	}
+
+	public void Open96()//
+	{
+		ItemCreateint = 96;
+		activeIndices = new int[] { 67, 167, 301 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate95()//ブーツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item147 = ES3.Load<int>("Item147", defaultValue: 0);
+		int Item165 = ES3.Load<int>("Item165", defaultValue: 0);
+		int Item72 = ES3.Load<int>("Item72", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item147 >= 1 && Item165 >= 1 && Item72 >= 1)
+		{
+			ES3.Save<int>("Item147", Item147 - 1);
+			ES3.Save<int>("Item165", Item165 - 1);
+			ES3.Save<int>("Item72", Item72 - 1);
+
+			int Item95 = ES3.Load<int>("Item95", defaultValue: 0);
+			ES3.Save<int>("Item95", Item95 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On95");
+
+		}
+	}
+
+	private IEnumerator On95()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(95);
+		yield return new WaitForSeconds(4.01f);
+		Open95();
+
+	}
+
+	public void Open95()//
+	{
+		ItemCreateint = 95;
+		activeIndices = new int[] { 72, 147, 165 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate94()//ブーツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item153 = ES3.Load<int>("Item153", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int Item241 = ES3.Load<int>("Item241", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item153 >= 1 && Item26 >= 1 && Item241 >= 1)
+		{
+			ES3.Save<int>("Item153", Item153 - 1);
+			ES3.Save<int>("Item26", Item26 - 1);
+			ES3.Save<int>("Item241", Item241 - 1);
+
+			int Item94 = ES3.Load<int>("Item94", defaultValue: 0);
+			ES3.Save<int>("Item94", Item94 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On94");
+
+		}
+	}
+
+	private IEnumerator On94()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(94);
+		yield return new WaitForSeconds(4.01f);
+		Open94();
+
+	}
+
+	public void Open94()//
+	{
+		ItemCreateint = 94;
+		activeIndices = new int[] { 26, 153, 241 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate93()//ブーツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item300 = ES3.Load<int>("Item300", defaultValue: 0);
+		int Item215 = ES3.Load<int>("Item215", defaultValue: 0);
+		int Item73 = ES3.Load<int>("Item73", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item300 >= 1 && Item215 >= 1 && Item73 >= 1)
+		{
+			ES3.Save<int>("Item300", Item300 - 1);
+			ES3.Save<int>("Item215", Item215 - 1);
+			ES3.Save<int>("Item73", Item73 - 1);
+
+			int Item93 = ES3.Load<int>("Item93", defaultValue: 0);
+			ES3.Save<int>("Item93", Item93 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On93");
+
+		}
+	}
+
+	private IEnumerator On93()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(93);
+		yield return new WaitForSeconds(4.01f);
+		Open93();
+
+	}
+
+	public void Open93()//
+	{
+		ItemCreateint = 93;
+		activeIndices = new int[] { 73, 215, 300 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate92()//ブーツ
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item217 = ES3.Load<int>("Item217", defaultValue: 0);
+		int Item179 = ES3.Load<int>("Item179", defaultValue: 0);
+		int Item6 = ES3.Load<int>("Item6", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item217 >= 1 && Item179 >= 1 && Item6 >= 1)
+		{
+			ES3.Save<int>("Item217", Item217 - 1);
+			ES3.Save<int>("Item179", Item179 - 1);
+			ES3.Save<int>("Item6", Item6 - 1);
+
+			int Item92 = ES3.Load<int>("Item92", defaultValue: 0);
+			ES3.Save<int>("Item92", Item92 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On92");
+
+		}
+	}
+
+	private IEnumerator On92()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(92);
+		yield return new WaitForSeconds(4.01f);
+		Open92();
+
+	}
+
+	public void Open92()//
+	{
+		ItemCreateint = 92;
+		activeIndices = new int[] { 6, 179, 217 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate91()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item217 = ES3.Load<int>("Item217", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item217 >= 1 && Item26 >= 1)
+		{
+			ES3.Save<int>("Item217", Item217 - 1);
+			ES3.Save<int>("Item26", Item26 - 1);
+
+			int Item91 = ES3.Load<int>("Item91", defaultValue: 0);
+			ES3.Save<int>("Item91", Item91 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On91");
+
+		}
+	}
+
+	private IEnumerator On91()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(91);
+		yield return new WaitForSeconds(4.01f);
+		Open91();
+
+	}
+
+	public void Open91()//
+	{
+		ItemCreateint = 91;
+		activeIndices = new int[] { 26, 217 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 15, 10 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate90()//ベルト
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item142 = ES3.Load<int>("Item142", defaultValue: 0);
+		int Item220 = ES3.Load<int>("Item220", defaultValue: 0);
+		int Item165 = ES3.Load<int>("Item165", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item142 >= 1 && Item220 >= 1 && Item165 >= 1)
+		{
+			ES3.Save<int>("Item142", Item142 - 1);
+			ES3.Save<int>("Item220", Item220 - 1);
+			ES3.Save<int>("Item165", Item165 - 1);
+
+			int Item90 = ES3.Load<int>("Item90", defaultValue: 0);
+			ES3.Save<int>("Item90", Item90 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On90");
+
+		}
+	}
+
+	private IEnumerator On90()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(90);
+		yield return new WaitForSeconds(4.01f);
+		Open90();
+
+	}
+
+	public void Open90()//
+	{
+		ItemCreateint = 90;
+		activeIndices = new int[] { 142, 220, 165 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate88()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item223 = ES3.Load<int>("Item223", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item223 >= 3 && Item61 >= 77 && Item174 >= 18)
+		{
+			ES3.Save<int>("Item223", Item223 - 3);
+			ES3.Save<int>("Item61", Item61 - 77);
+			ES3.Save<int>("Item174", Item174 - 18);
+
+			int Item88 = ES3.Load<int>("Item88", defaultValue: 0);
+			ES3.Save<int>("Item88", Item88 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On88");
+
+		}
+	}
+
+	private IEnumerator On88()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(88);
+		yield return new WaitForSeconds(4.01f);
+		Open88();
+
+	}
+
+	public void Open88()//
+	{
+		ItemCreateint = 88;
+		activeIndices = new int[] { 61, 174, 223 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 6, 7, 48 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate86()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item223 = ES3.Load<int>("Item223", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+		int Item174 = ES3.Load<int>("Item174", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item223 >= 3 && Item61 >= 77 && Item174 >= 18)
+		{
+			ES3.Save<int>("Item223", Item223 - 3);
+			ES3.Save<int>("Item61", Item61 - 77);
+			ES3.Save<int>("Item174", Item174 - 18);
+
+			int Item86 = ES3.Load<int>("Item86", defaultValue: 0);
+			ES3.Save<int>("Item86", Item86 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On86");
+
+		}
+	}
+
+	private IEnumerator On86()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(86);
+		yield return new WaitForSeconds(4.01f);
+		Open86();
+
+	}
+
+	public void Open86()//
+	{
+		ItemCreateint = 86;
+		activeIndices = new int[] { 61, 174, 223 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 6, 7, 48 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate85()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item72 = ES3.Load<int>("Item72", defaultValue: 0);
+		int Item199 = ES3.Load<int>("Item199", defaultValue: 0);
+		int Item150 = ES3.Load<int>("Item150", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item72 >= 48 && Item199 >= 6 && Item150 >= 7)
+		{
+			ES3.Save<int>("Item72", Item72 - 48);
+			ES3.Save<int>("Item199", Item199 - 6);
+			ES3.Save<int>("Item150", Item150 - 7);
+
+			int Item85 = ES3.Load<int>("Item85", defaultValue: 0);
+			ES3.Save<int>("Item85", Item85 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On85");
+
+		}
+	}
+
+	private IEnumerator On85()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(85);
+		yield return new WaitForSeconds(4.01f);
+		Open85();
+
+	}
+
+	public void Open85()//
+	{
+		ItemCreateint = 85;
+		activeIndices = new int[] { 72, 150, 199 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 48, 7, 6 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate81()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item223 = ES3.Load<int>("Item223", defaultValue: 0);
+		int Item151 = ES3.Load<int>("Item151", defaultValue: 0);
+		int Item164 = ES3.Load<int>("Item164", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item223 >= 10 && Item151 >= 5 && Item164 >= 3)
+		{
+			ES3.Save<int>("Item223", Item223 - 10);
+			ES3.Save<int>("Item151", Item151 - 5);
+			ES3.Save<int>("Item164", Item164 - 3);
+
+			int Item81 = ES3.Load<int>("Item81", defaultValue: 0);
+			ES3.Save<int>("Item81", Item81 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On81");
+
+		}
+	}
+
+	private IEnumerator On81()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(81);
+		yield return new WaitForSeconds(4.01f);
+		Open81();
+
+	}
+
+	public void Open81()//
+	{
+		ItemCreateint = 81;
+		activeIndices = new int[] { 151, 164, 223 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 3, 10 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate80()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int Item244 = ES3.Load<int>("Item244", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item26 >= 10 && Item244 >= 15)
+		{
+			ES3.Save<int>("Item26", Item26 - 10);
+			ES3.Save<int>("Item244", Item244 - 15);
+
+			int Item80 = ES3.Load<int>("Item80", defaultValue: 0);
+			ES3.Save<int>("Item80", Item80 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On80");
+
+		}
+	}
+
+	private IEnumerator On80()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(80);
+		yield return new WaitForSeconds(4.01f);
+		Open80();
+
+	}
+
+	public void Open80()//
+	{
+		ItemCreateint = 80;
+		activeIndices = new int[] { 26, 224 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10, 15 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate79()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item26 >= 2)
+		{
+			ES3.Save<int>("Item26", Item26 - 2);
+
+			int Item79 = ES3.Load<int>("Item79", defaultValue: 0);
+			ES3.Save<int>("Item79", Item79 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On79");
+
+		}
+	}
+
+	private IEnumerator On79()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(79);
+		yield return new WaitForSeconds(4.01f);
+		Open79();
+
+	}
+
+	public void Open79()//アーマー
+	{
+		ItemCreateint = 79;
+
+		activeIndices = new int[] { 26 }; //3個表示 image
+		activeTextIndices = new int[] { 0 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 2 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	public void ItemCreate78()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item16 = ES3.Load<int>("Item16", defaultValue: 0);
+		int Item17 = ES3.Load<int>("Item17", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item16 >= 3 && Item17 >= 1)
+		{
+			ES3.Save<int>("Item16", Item16 - 3);
+			ES3.Save<int>("Item17", Item17 - 1);
+
+			int Item78 = ES3.Load<int>("Item78", defaultValue: 0);
+			ES3.Save<int>("Item78", Item78 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On78");
+
+		}
+	}
+
+	private IEnumerator On78()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(78);
+		yield return new WaitForSeconds(4.01f);
+		Open78();
+
+	}
+
+	public void Open78()//アーマー
+	{
+		ItemCreateint = 78;
+		activeIndices = new int[] { 16, 17 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////  
+	public void ItemCreate76()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item153 = ES3.Load<int>("Item153", defaultValue: 0);
+		int Item68 = ES3.Load<int>("Item68", defaultValue: 0);
+		int Item246 = ES3.Load<int>("Item246", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item153 >= 15 && Item68 >= 3 && Item246 >= 1)
+		{
+			ES3.Save<int>("Item153", Item153 - 10);
+			ES3.Save<int>("Item68", Item68 - 15);
+			ES3.Save<int>("Item246", Item246 - 3);
+
+			int Item76 = ES3.Load<int>("Item76", defaultValue: 0);
+			ES3.Save<int>("Item76", Item76 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On76");
+
+		}
+	}
+
+	private IEnumerator On76()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(76);
+		yield return new WaitForSeconds(4.01f);
+		Open76();
+
+	}
+
+	public void Open76()//
+	{
+		ItemCreateint = 76;
+		activeIndices = new int[] { 68, 153, 246 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 15, 10, 3 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate75()//アーマー
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item48 = ES3.Load<int>("Item48", defaultValue: 0);
+		int Item63 = ES3.Load<int>("Item63", defaultValue: 0);
+		int Item148 = ES3.Load<int>("Item148", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item48 >= 1 && Item63 >= 7 && Item148 >= 8)
+		{
+			ES3.Save<int>("Item48", Item48 - 1);
+			ES3.Save<int>("Item63", Item63 - 7);
+			ES3.Save<int>("Item148", Item148 - 8);
+
+			int Item75 = ES3.Load<int>("Item75", defaultValue: 0);
+			ES3.Save<int>("Item75", Item75 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On75");
+
+		}
+	}
+
+	private IEnumerator On75()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(75);
+		yield return new WaitForSeconds(4.01f);
+		Open75();
+
+	}
+
+	public void Open75()//
+	{
+		ItemCreateint = 75;
+		activeIndices = new int[] { 48, 63, 148 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 7, 8 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+
+	public void ItemCreate74()//緑の宝石
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item65 = ES3.Load<int>("Item65", defaultValue: 0);
+		int Item164 = ES3.Load<int>("Item164", defaultValue: 0);
+		int Item135 = ES3.Load<int>("Item135", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item65 >= 100 && Item164 >= 125 && Item135 >= 58)
+		{
+			ES3.Save<int>("Item65", Item65 - 100);
+			ES3.Save<int>("Item164", Item164 - 125);
+			ES3.Save<int>("Item135", Item135 - 58);
+
+			int Item74 = ES3.Load<int>("Item74", defaultValue: 0);
+			ES3.Save<int>("Item74", Item74 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On74");
+
+		}
+	}
+
+	private IEnumerator On74()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(74);
+		yield return new WaitForSeconds(4.01f);
+		Open74();
+
+	}
+
+	public void Open74()//
+	{
+		ItemCreateint = 74;
+		activeIndices = new int[] { 65, 135, 164 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 100, 58, 125 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate73()//赤い宝石
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item66 = ES3.Load<int>("Item66", defaultValue: 0);
+		int Item168 = ES3.Load<int>("Item168", defaultValue: 0);
+		int Item135 = ES3.Load<int>("Item135", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item66 >= 55 && Item168 >= 37 && Item135 >= 18)
+		{
+			ES3.Save<int>("Item66", Item66 - 55);
+			ES3.Save<int>("Item168", Item168 - 37);
+			ES3.Save<int>("Item135", Item135 - 18);
+
+			int Item73 = ES3.Load<int>("Item73", defaultValue: 0);
+			ES3.Save<int>("Item73", Item73 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On73");
+
+		}
+	}
+
+	private IEnumerator On73()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(73);
+		yield return new WaitForSeconds(4.01f);
+		Open73();
+
+	}
+
+	public void Open73()//
+	{
+		ItemCreateint = 73;
+		activeIndices = new int[] { 66, 135, 168 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 55, 18, 37 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate72()//黄色の宝石LV3
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item297 = ES3.Load<int>("Item297", defaultValue: 0);
+		int Item165 = ES3.Load<int>("Item165", defaultValue: 0);
+		int Item135 = ES3.Load<int>("Item135", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item297 >= 22 && Item165 >= 12 && Item135 >= 4)
+		{
+			ES3.Save<int>("Item297", Item297 - 22);
+			ES3.Save<int>("Item165", Item165 - 12);
+			ES3.Save<int>("Item135", Item135 - 4);
+
+			int Item72 = ES3.Load<int>("Item72", defaultValue: 0);
+			ES3.Save<int>("Item72", Item72 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On72");
+
+		}
+	}
+
+	private IEnumerator On72()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(72);
+		yield return new WaitForSeconds(4.01f);
+		Open72();
+
+	}
+
+	public void Open72()//
+	{
+		ItemCreateint = 72;
+		activeIndices = new int[] { 135, 165, 297 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 4, 12, 22 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate71()//紫の宝石LV3
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item298 = ES3.Load<int>("Item298", defaultValue: 0);
+		int Item155 = ES3.Load<int>("Item155", defaultValue: 0);
+		int Item140 = ES3.Load<int>("Item140", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item298 >= 7 && Item155 >= 3 && Item140 >= 1)
+		{
+			ES3.Save<int>("Item298", Item298 - 7);
+			ES3.Save<int>("Item155", Item155 - 3);
+			ES3.Save<int>("Item140", Item140 - 1);
+
+			int Item71 = ES3.Load<int>("Item71", defaultValue: 0);
+			ES3.Save<int>("Item71", Item71 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On71");
+
+		}
+	}
+
+	private IEnumerator On71()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(71);
+		yield return new WaitForSeconds(4.01f);
+		Open71();
+
+	}
+
+	public void Open71()//
+	{
+		ItemCreateint = 71;
+		activeIndices = new int[] { 140, 155, 298 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 3, 7 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate68()//虹色の宝石
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item294 = ES3.Load<int>("Item294", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item294 >= 10)
+		{
+			ES3.Save<int>("Item294", Item294 - 10);
+
+			int Item68 = ES3.Load<int>("Item68", defaultValue: 0);
+			ES3.Save<int>("Item68", Item68 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On68");
+
+		}
+	}
+
+	private IEnumerator On68()
+	{
+		Randamu = Random.Range(1, 5);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(68);
+		yield return new WaitForSeconds(4.01f);
+		Open68();
+
+	}
+
+	public void Open68()//
+	{
+		ItemCreateint = 68;
+
+		activeIndices = new int[] { 294 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate67()//氷の宝石LV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item293 = ES3.Load<int>("Item293", defaultValue: 0);
+		int Item8 = ES3.Load<int>("Item8", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item293 >= 3 && Item8 >= 5)
+		{
+			ES3.Save<int>("Item293", Item293 - 3);
+			ES3.Save<int>("Item8", Item8 - 5);
+
+			int Item67 = ES3.Load<int>("Item67", defaultValue: 0);
+			ES3.Save<int>("Item67", Item67 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On67");
+
+		}
+	}
+
+	private IEnumerator On67()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(67);
+		yield return new WaitForSeconds(4.01f);
+		Open67();
+
+	}
+
+	public void Open67()//
+	{
+		ItemCreateint = 67;
+		activeIndices = new int[] { 8, 293 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 3 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate66()//赤い宝石LV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item292 = ES3.Load<int>("Item292", defaultValue: 0);
+		int Item6 = ES3.Load<int>("Item6", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item292 >= 3 && Item6 >= 5)
+		{
+			ES3.Save<int>("Item292", Item292 - 3);
+			ES3.Save<int>("Item6", Item6 - 5);
+
+			int Item66 = ES3.Load<int>("Item66", defaultValue: 0);
+			ES3.Save<int>("Item66", Item66 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On66");
+
+		}
+	}
+
+	private IEnumerator On66()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(66);
+		yield return new WaitForSeconds(4.01f);
+		Open66();
+
+	}
+
+	public void Open66()//
+	{
+		ItemCreateint = 66;
+		activeIndices = new int[] { 6, 292 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 3 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate65()//緑の宝石LV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item291 = ES3.Load<int>("Item291", defaultValue: 0);
+		int Item32 = ES3.Load<int>("Item32", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item291 >= 3 && Item32 >= 5)
+		{
+			ES3.Save<int>("Item291", Item291 - 3);
+			ES3.Save<int>("Item32", Item32 - 5);
+
+			int Item65 = ES3.Load<int>("Item65", defaultValue: 0);
+			ES3.Save<int>("Item65", Item65 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On65");
+
+		}
+	}
+
+	private IEnumerator On65()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(65);
+		yield return new WaitForSeconds(4.01f);
+		Open65();
+
+
+	}
+
+	public void Open65()//
+	{
+		ItemCreateint = 65;
+		activeIndices = new int[] { 32, 291 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 3 }; //消費数。
+		OpenCrieta();
+	}
+
+	///////////////////////////////////
+	public void ItemCreate61()//紫の宝石LV3
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item67 = ES3.Load<int>("Item67", defaultValue: 0);
+		int Item167 = ES3.Load<int>("Item167", defaultValue: 0);
+		int Item140 = ES3.Load<int>("Item140", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item67 >= 10 && Item167 >= 2 && Item140 >= 1)
+		{
+			ES3.Save<int>("Item67", Item67 - 10);
+			ES3.Save<int>("Item167", Item167 - 2);
+			ES3.Save<int>("Item140", Item140 - 1);
+
+			int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+			ES3.Save<int>("Item61", Item61 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On61");
+
+		}
+	}
+
+	private IEnumerator On61()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(61);
+		yield return new WaitForSeconds(4.01f);
+		Open61();
+
+
+	}
+
+	public void Open61()//
+	{
+
+		ItemCreateint = 61;
+		activeIndices = new int[] { 67, 140, 167 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10, 1, 2 }; //消費数。
+		OpenCrieta();
+	}
+
+
+
+
+
+
+	public void ItemCreate55()//
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item17 = ES3.Load<int>("Item17", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item17 >= 3)
+		{
+			ES3.Save<int>("Item17", Item17 - 10);
+
+			int Item55 = ES3.Load<int>("Item55", defaultValue: 0);
+			ES3.Save<int>("Item55", Item55 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On55");
+
+		}
+	}
+
+	public void Open55()//
+	{
+		ItemCreateint = 55;
+
+		activeIndices = new int[] { 17 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10 }; //消費数。
+		OpenCrieta();
+	}
+
+	private IEnumerator On55()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(55);
+		yield return new WaitForSeconds(4.01f);
+		Open55();
+
+
+
+	}
+
+
+
+	public void ItemCreate52()
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item61 >= 3)
+		{
+			ES3.Save<int>("Item61", Item61 - 3);
+
+			int Item52 = ES3.Load<int>("Item52", defaultValue: 0);
+			ES3.Save<int>("Item52", Item52 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On52");
+
+		}
+	}
+
+
+	public void Open52()//
+	{
+		ItemCreateint = 52;
+
+
+		activeIndices = new int[] { 61 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	private IEnumerator On52()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(52);
+		yield return new WaitForSeconds(4.01f);
+		Open52();
+
+
+
+	}
+
+
+
+	public void ItemCreate46()
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item61 >= 5)
+		{
+			ES3.Save<int>("Item61", Item61 - 5);
+
+			int Item46 = ES3.Load<int>("Item46", defaultValue: 0);
+			ES3.Save<int>("Item46", Item46 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On46");
+
+		}
+	}
+
+
+	public void Open46()//
+	{
+		ItemCreateint = 46;
+
+
+		activeIndices = new int[] { 61 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5 }; //消費数。
+		OpenCrieta();
+	}
+
+	private IEnumerator On46()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(46);
+		yield return new WaitForSeconds(4.01f);
+		Open46();
+
+
+
+	}
+
+	public void ItemCreate42()//手甲LV2
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+		int Item142 = ES3.Load<int>("Item142", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item26 >= 2 && Item142 >= 1)
+		{
+			ES3.Save<int>("Item26", Item26 - 2);
+			ES3.Save<int>("Item142", Item142 - 1);
+
+			int Item42 = ES3.Load<int>("Item42", defaultValue: 0);
+			ES3.Save<int>("Item42", Item42 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On42");
+
+		}
+	}
+
+
+	public void Open42()//手甲
+	{
+		ItemCreateint = 42;
+		activeIndices = new int[] { 26, 142 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 2, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+
+
+	private IEnumerator On42()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(42);
+		yield return new WaitForSeconds(4.01f);
+		Open42();
+
+
+
+	}
+	///////////////////////////////////
+	public void ItemCreate41()//手甲
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item16 = ES3.Load<int>("Item16", defaultValue: 0);
+		int Item61 = ES3.Load<int>("Item61", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item16 >= 5 && Item61 >= 1)
+		{
+			ES3.Save<int>("Item16", Item16 - 5);
+			ES3.Save<int>("Item61", Item61 - 1);
+
+			int Item41 = ES3.Load<int>("Item41", defaultValue: 0);
+			ES3.Save<int>("Item41", Item41 + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On41");
+
+		}
+	}
+
+
+	public void Open41()//手甲
+	{
+		ItemCreateint = 41;
+		activeIndices = new int[] { 16, 61 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 5, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+
+
+	private IEnumerator On41()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(41);
+		yield return new WaitForSeconds(4.01f);
+		Open41();
+
+
+
+	}
+	///////////////////////////////////
+
+
+
+	public void ItemCreate40()//ファイヤーボール。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item11 = ES3.Load<int>("Item11", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item11 >= 3)
+		{
+			ES3.Save<int>("Item11", Item11 - 2);
+
+			int Item40int = ES3.Load<int>("Item40", defaultValue: 0);//Item40がAIでintにしてたのでItem40intに変更。
+			ES3.Save<int>("Item40", Item40int + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On40");
+
+		}
+	}
+
+
+
+	public void Open40()//
+	{
+		ItemCreateint = 40;
+
+
+		activeIndices = new int[] { 11 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 2 }; //消費数。
+		OpenCrieta();
+	}
+
+	private IEnumerator On40()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(40);
+		yield return new WaitForSeconds(4.01f);
+		Open40();
+
+
+	}
+
+
+
+
+
+	public void WapomTrue()
+	{
+		WeaponSerect.SetActive(true);
+		ScrollView.SetActive(false);//。
+
+	}
+
+	public void Wapomfalse()
+	{
+		WeaponSerect.SetActive(false);
+		ScrollView.SetActive(true);//。
+
+	}
+
+
+
+
+	public void ItemCreate34()//風の剣
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item32 = ES3.Load<int>("Item32", defaultValue: 0);
+		int Item27 = ES3.Load<int>("Item27", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item32 >= 10 && Item27 >= 1)
+		{
+			ES3.Save<int>("Item32", Item32 - 10);
+			ES3.Save<int>("Item27", Item27 - 1);
+
+			int Item34a = ES3.Load<int>("Item34", defaultValue: 0);
+			ES3.Save<int>("Item34", Item34a + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On34");
+
+		}
+	}
+
+	public void ItemCreate32()//緑宝石。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item30 = ES3.Load<int>("Item30", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item30 >= 3)
+		{
+			ES3.Save<int>("Item30", Item30 - 3);
+
+			int Item32a = ES3.Load<int>("Item32", defaultValue: 0);
+			ES3.Save<int>("Item32", Item32a + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On32");
+
+		}
+	}
+
+	public void ItemCreate31()//
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item32 = ES3.Load<int>("Item32", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item32 >= 2)
+		{
+			ES3.Save<int>("Item32", Item32 - 2);
+			int Item31a = ES3.Load<int>("Item31", defaultValue: 0);
+			ES3.Save<int>("Item31", Item31a + 1);
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+			//MPとHPを計算します。
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On31");
+
+		}
+	}
+
+	// Similar changes can be made to the other methods
+
+	public void ItemCreate29()//炎剣
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item6 = ES3.Load<int>("Item6", defaultValue: 0);
+		int Item27 = ES3.Load<int>("Item27", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item6 >= 100 && Item27 >= 1)
+		{
+			ES3.Save<int>("Item6", Item6 - 100);
+			ES3.Save<int>("Item27", Item27 - 1);
+
+			int Item29a = ES3.Load<int>("Item29", defaultValue: 0);
+			ES3.Save<int>("Item29", Item29a + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On29");
+
+		}
+	}
+
+	public void ItemCreate27()//剣
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item26 = ES3.Load<int>("Item26", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item26 >= 1)
+		{
+			ES3.Save<int>("Item26", Item26 - 1);
+
+			int Item27a = ES3.Load<int>("Item27", defaultValue: 0);
+			ES3.Save<int>("Item27", Item27a + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On27");
+
+		}
+	}
+
+	public void ItemCreate26()//白い鋼
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item16 = ES3.Load<int>("Item16", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item16 >= 10)
+		{
+			ES3.Save<int>("Item16", Item16 - 10);
+
+			int Item26a = ES3.Load<int>("Item26", defaultValue: 0);
+			ES3.Save<int>("Item26", Item26a + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On26");
+
+		}
+	}
+
+	public void ItemCreate25()//木のパネル。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item16 = ES3.Load<int>("Item16", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item16 >= 10)
+		{
+			ES3.Save<int>("Item16", Item16 - 10);
+
+			int Item25a = ES3.Load<int>("Item25", defaultValue: 0);
+			ES3.Save<int>("Item25", Item25a + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On25");
+
+		}
+	}
+
+	public void ItemCreate24()//ペットの家。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item25 = ES3.Load<int>("Item25", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item25 >= 10)
+		{
+			ES3.Save<int>("Item25", Item25 - 10);
+			int Item24a = ES3.Load<int>("Item24", defaultValue: 0);
+			ES3.Save<int>("Item24", Item24a + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+			//。
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On24");
+
+		}
+	}
+
+	public void ItemCreate15()//ツルハシ。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item17 = ES3.Load<int>("Item17", defaultValue: 0);
+		int Item16 = ES3.Load<int>("Item16", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item17 >= 3 && Item16 >= 1)
+		{
+			ES3.Save<int>("Item17", Item17 - 3);// 鋼
+			ES3.Save<int>("Item16", Item16 - 1);// 鋼
+
+			int Item15i = ES3.Load<int>("Item15", defaultValue: 0);
+			ES3.Save<int>("Item15", Item15i + 1);// 鋼//ツルハシ。
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On15");
+
+		}
+	}
+
+	public void ItemCreate8()//青い宝石。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item12 = ES3.Load<int>("Item12", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item12 >= 10)
+		{
+			ES3.Save<int>("Item12", Item12 - 10);
+
+			int Item8i = ES3.Load<int>("Item8", defaultValue: 0);
+			ES3.Save<int>("Item8", Item8i + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On8");
+
+		}
+	}
+
+	public void ItemCreate7()//紫の宝石。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item12 = ES3.Load<int>("Item12", defaultValue: 0);
+		int Item11 = ES3.Load<int>("Item11", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item12 >= 3 && Item11 >= 3)
+		{
+			ES3.Save<int>("Item12", Item12 - 3);
+			ES3.Save<int>("Item11", Item11 - 3);
+
+			int Item7i = ES3.Load<int>("Item7", defaultValue: 0);
+			ES3.Save<int>("Item7", Item7i + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On7");
+
+		}
+	}
+
+	public void ItemCreate6()//赤い宝石。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item11 = ES3.Load<int>("Item11", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item11 >= 3)
+		{
+			ES3.Save<int>("Item11", Item11 - 3);
+
+			int Item6i = ES3.Load<int>("Item6", defaultValue: 0);
+			ES3.Save<int>("Item6", Item6i + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On6");
+
+		}
+	}
+
+	public void ItemCreate3()//紫のインゴット。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item4 = ES3.Load<int>("Item4", defaultValue: 0);
+		int Item7 = ES3.Load<int>("Item7", defaultValue: 0);
+
+		if (HPPlayer >= 4 && MPPlayer >= 3 && Item4 >= 1 && Item7 >= 1)
+		{
+			ES3.Save<int>("Item7", Item7 - 1);
+			ES3.Save<int>("Item4", Item4 - 1);
+
+			int Item3i = ES3.Load<int>("Item3", defaultValue: 0);
+			ES3.Save<int>("Item3", Item3i + 1);
+
+			ES3.Save<int>("HPrecovery", -3);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -3);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On3");
+
+		}
+	}
+
+	public void ItemCreate2()//アイス魔法。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item8 = ES3.Load<int>("Item8", defaultValue: 0);
+		int Item13 = ES3.Load<int>("Item13", defaultValue: 0);
+		int Item19 = ES3.Load<int>("Item19", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item8 >= 2 && Item13 >= 3 && Item19 >= 1)
+		{
+			ES3.Save<int>("Item8", Item8 - 2);
+			ES3.Save<int>("Item19", Item19 - 1);
+			ES3.Save<int>("Item13", Item13 - 3);
+
+			int Item2 = ES3.Load<int>("Item2", defaultValue: 0);
+			ES3.Save<int>("Item2", Item2 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On2");
+
+		}
+	}
+
+	public void ItemCreate1()//トルネード。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item7 = ES3.Load<int>("Item7", defaultValue: 0);
+		int Item3 = ES3.Load<int>("Item3", defaultValue: 0);
+		int Item18 = ES3.Load<int>("Item18", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item7 >= 3 && Item3 >= 1 && Item18 >= 3)
+		{
+			ES3.Save<int>("Item18", Item18 - 3);
+			ES3.Save<int>("Item3", Item3 - 1);
+			ES3.Save<int>("Item7", Item7 - 3);
+
+			int Item1 = ES3.Load<int>("Item1", defaultValue: 0);
+			ES3.Save<int>("Item1", Item1 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+
+
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On1");
+
+		}
+	}
+
+	public void ItemCreate0()//爆発魔法。
+	{
+		int HPPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+		int MPPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+		int Item6 = ES3.Load<int>("Item6", defaultValue: 0);
+
+		if (HPPlayer >= 11 && MPPlayer >= 10 && Item6 >= 2)
+		{
+			ES3.Save<int>("Item6", Item6 - 2);
+			int Item9 = ES3.Load<int>("Item9", defaultValue: 0);
+			ES3.Save<int>("Item9", Item9 + 1);
+
+			ES3.Save<int>("HPrecovery", -10);//HPを消費します。
+			ES3.Save<int>("MPrecovery", -10);
+			//MPとHPを計算します。
+			AnimatorPlayer();//ハンマーを叩きます。
+			StartCoroutine("On");
+
+		}
+	}
+
+	public void Open34()//風の剣
+	{
+		ItemCreateint = 34;
+		activeIndices = new int[] { 27, 32 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 10 }; //消費数。
+		OpenCrieta();
+	}
+
+	public void Open32()//緑の宝石
+	{
+		ItemCreateint = 32;
+
+		activeIndices = new int[] { 30 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3 }; //消費数。
+		OpenCrieta();
+	}
+	public void Open31()//風の竜巻
+	{
+		ItemCreateint = 31;
+
+		activeIndices = new int[] { 32 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 2 }; //消費数。
+		OpenCrieta();
+	}
+
+	public void Open29()//炎剣
+	{
+		ItemCreateint = 29;
+		activeIndices = new int[] { 6, 27 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 100, 1 }; //消費数。
+		OpenCrieta();
+	}
+	public void Open27()//剣
+	{
+		ItemCreateint = 27;
+
+		activeIndices = new int[] { 26 };
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1 }; //消費数。
+		OpenCrieta();
+
+	}
+	public void Open26()//白い鋼
+	{
+		ItemCreateint = 26;
+
+		activeIndices = new int[] { 16 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	public void Open25()//ペットの家を作るパネル
+	{
+		ItemCreateint = 25;
+
+		activeIndices = new int[] { 16 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	public void Open24()//ペットの家を作るアイテム
+	{
+		ItemCreateint = 24;
+
+		activeIndices = new int[] { 25 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	public void Open15()//ここで作成するアイテム画面を表示します。
+	{
+		ItemCreateint = 15;
+		activeIndices = new int[] { 16, 17 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 3 }; //消費数。
+		OpenCrieta();
+
+
+	}
+
+
+
+	public void Open8()//ここで作成するアイテム画面を表示します。
+	{
+		ItemCreateint = 8;
+
+		activeIndices = new int[] { 12 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 10 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	public void Open7()//ここで作成するアイテム画面を表示します。
+	{
+		ItemCreateint = 7;
+		activeIndices = new int[] { 11, 12 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3, 3 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	public void Open6()//ここで作成するアイテム画面を表示します。
+	{
+
+		ItemCreateint = 6;
+
+		activeIndices = new int[] { 11 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 3 }; //消費数。
+		OpenCrieta();
+
+	}
+
+
+
+	public void Open3()//ここで作成するアイテム画面を表示します。
+	{
+		ItemCreateint = 3;
+		activeIndices = new int[] { 4, 7 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 1 }; //消費数。
+		OpenCrieta();
+	}
+
+	public void Open2()//
+	{
+		ItemCreateint = 2;
+		activeIndices = new int[] { 8, 13, 19 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 2, 3, 1 }; //消費数。
+		OpenCrieta();
+
+
+	}
+
+	public void Open1()//ここで作成するアイテム画面を表示します。
+	{
+		ItemCreateint = 1;
+		activeIndices = new int[] { 3, 7, 18 }; //3個表示 image
+		activeTextIndices = new int[] { 0, 1, 2 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 1, 3, 3 }; //消費数。
+		OpenCrieta();
+
+	}
+
+	public void Open()//ここで作成するアイテム画面を表示します。
+	{
+		ItemCreateint = 0;
+
+		activeIndices = new int[] { 6 }; //3個表示 image
+		activeTextIndices = new int[] { 1 }; // ItemTexts0,1,2をtrueに設定
+		itemSuffix = new int[] { 2 }; //消費数。
+		OpenCrieta();
+	}
+
+	private IEnumerator On34()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+
+		ActivateItem(34);
+		yield return new WaitForSeconds(4.01f);
+		Open34();
+
+
+
+	}
+	private IEnumerator On32()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		//  var parent = this.transform;//親を取得します。
+		ActivateItem(32);
+		yield return new WaitForSeconds(4.01f);
+		Open32();
+
+
+
+	}
+
+	private IEnumerator On31()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		//  var parent = this.transform;//親を取得します。
+		ActivateItem(31);
+		yield return new WaitForSeconds(4.01f);
+		Open31();
+
+
+
+	}
+
+
+
+	private IEnumerator On29()
+	{
+		ES3.Save<int>("Playerweapon", 29);
+		Start();
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(29);
+		yield return new WaitForSeconds(4.01f);
+		Open29();
+
+
+
+
+	}
+	private IEnumerator On27()
+	{
+		// ES3.Save<int>("Playerweapon",27);
+		// ES3.Save<int>("WeaponSerectOnbottun",1);//装備変更ボタン。
+		// Start();
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(27);
+		yield return new WaitForSeconds(4.01f);
+		Open27();
+
+
+
+
+	}
+	private IEnumerator On26()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(26);
+		yield return new WaitForSeconds(4.01f);
+		Open26();
+
+
+
+	}
+
+	private IEnumerator On25()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(25);
+		yield return new WaitForSeconds(4.01f);
+		Open25();
+
+
+
+	}
+
+	private IEnumerator On24()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+
+		ActivateItem(24);
+		yield return new WaitForSeconds(4.01f);
+		Open24();
+
+
+
+	}
+	private IEnumerator On15()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(15);
+		yield return new WaitForSeconds(4.01f);
+		Open15();
+
+
+
+	}
+
+
+
+	private IEnumerator On8()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(8);
+		yield return new WaitForSeconds(4.01f);
+		Open8();
+
+
+
+	}
+
+	private IEnumerator On7()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(7);
+		yield return new WaitForSeconds(4.01f);
+		Open7();
+
+
+
+	}
+	private IEnumerator On6()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(6);
+		yield return new WaitForSeconds(4.01f);
+		Open6();
+
+
+	}
+
+	private IEnumerator On3()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(3);
+		yield return new WaitForSeconds(4.01f);
+		Open3();
+
+
+
+	}
+
+
+	private IEnumerator On2()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(2);
+		yield return new WaitForSeconds(4.01f);
+		Open2();
+
+
+
+	}
+
+	private IEnumerator On1()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(1);
+		yield return new WaitForSeconds(4.01f);
+		Open1();
+
+
+
+	}
+
+	private IEnumerator On()
+	{
+		Randamu = Random.Range(1, 3);
+		yield return new WaitForSeconds(3.01f);
+		ActivateItem(0);
+		yield return new WaitForSeconds(4.01f);
+		Open();
+
+
+
+	}
+
+	///////////////////////////////////アイテム36
+
+
+}
+
+/*2024令和6年 2/24
+
+public void Opena()
+	{
+		CreateScrollView.SetActive(true);
+
+
+		activeIndices = new int[] { 0, 1, 2 };//3個表示
+		itemSuffix = new int[] { -1, -2, -3 }; //消費数。
+		OpenCrieta();
+	}
+	public void aOpena1()
+	{
+		//activeIndices = new int[] { 0, 2 };
+		CreateScrollView.SetActive(true);
+
+		activeIndices = new int[] { 0, 1 };//二個表示
+		itemSuffix = new int[] { -1, -2 }; //消費数。
+		OpenCrieta();
+	}
+	public void aOpena2()
+	{
+		//activeIndices = new int[] { 0, 2 };
+		CreateScrollView.SetActive(true);
+
+		activeIndices = new int[] { 0 };//1個表示
+		itemSuffix = new int[] { -1, }; //消費数。
+		OpenCrieta();
+	}
+
+
+
+*/
+
+
+
+/*サンプル
+
+    public GameObject Item;//名前
+      public GameObject Itemimge;//アイテムの画像。
+     public Text ItemText34; 
+      public Text ItemText34a; 
+       public int Itemint;
+
+
+        public void Back()//ここを押したらItem画面を非表示にします。
+    {
+        Item.SetActive(false);
+        ScrollView.SetActive(true);//。
+    } 
+
+      public void ItemCreate34()//風の剣
+    {
+        if (ES3.Load<int>("HPPlayer", defaultValue:0) >= 11)
+        {
+            if (ES3.Load<int>("MPPlayer", defaultValue:0) >= 10)
+
+                if (ES3.Load<int>("Item6", defaultValue:0) >= 100)
+                {
+                    if (ES3.Load<int>("Item27", defaultValue:0) >= 1)
+                    {
+
+     Itemint32 = ES3.Load<int>("Item32", defaultValue:0) - 1; ES3.Save<int>("Item32",Itemint32);
+     Itemint27 = ES3.Load<int>("Item27", defaultValue:0) - 1; ES3.Save<int>("Item27",Itemint27);
+     Itemint34 = ES3.Load<int>("Item34", defaultValue:0) - 1; ES3.Save<int>("Item34",Itemint34);
+                        ES3.Save<int>("HPrecovery",-10);//HPを消費します。
+                        ES3.Save<int>("MPrecovery",-10);
+                        
+
+                        AnimatorPlayer();//ハンマーを叩きます。
+                        StartCoroutine("On34");
+                        Item34.SetActive(false);
+                    }
+                }
+        }
+    }
+
+
+
+     public void Open34()//風の剣
+    {
+        Item34.SetActive(true);
+        ScrollView.SetActive(false);//
+        ItemText34.text = ("-100/" + ES3.Load<int>("Item34", defaultValue:0));
+        ItemText34a.text = ("-1/" + ES3.Load<int>("Item27", defaultValue:0));
+
+    }
+
+
+
+  private IEnumerator On()
+    {
+
+        yield return new WaitForSeconds(3.01f);
+        var parent = this.transform;//親を取得します。
+        GameObject Itemd = Instantiate(Itemimge, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity, parent);
+        yield return new WaitForSeconds(4.01f);
+        ScrollView.SetActive(true);//スクロールビューは非表示にします。
+
+    }
+
+
+
+ if (ES3.Load<int>("WeaponSerectOnbottun", defaultValue:0) == 1)
+        {
+            WeaponSerectOnbottun.SetActive(true);
+
+        }else  if (ES3.Load<int>("WeaponSerectOnbottun", defaultValue:0) == 0)
+        {
+            WeaponSerectOnbottun.SetActive(false);
+
+        }
+
+
+
+AIにより改善され不要になったコード
+ public void ItemCreate6()//赤い宝石。
+		{
+			if (ES3.Load<int>("HPPlayer", defaultValue:0) >= 4)
+			{
+				if (ES3.Load<int>("MPPlayer", defaultValue:0) >= 3)
+				{
+
+					if (ES3.Load<int>("Item11", defaultValue:0) >= 3)
+					{
+                        ES3.Save<int>("Item11", item11 - 3);
+                        ES3.Save<int>("Item6", ES3.Load<int>("Item6", defaultValue:0) + 1);
+        
+						ES3.Save<int>("Item6", ES3.Load<int>("Item6", defaultValue: 0) + 1);
+						ES3.Save<int>("HPrecovery",-3);//HPを消費します。
+						ES3.Save<int>("MPrecovery",-3);
+						
+
+						AnimatorPlayer();//ハンマーを叩きます。
+						StartCoroutine("On6");
+						Itema.SetActive(false);
+					}
+				}
+			}
+		}
+
+
+*/
+
+//サンプル
+/*        
+
+	 public GameObject Itema;/
+	 public GameObject Itemimge;//
+
+	 public TextMeshProUGUI ItemText; 
+	 public TextMeshProUGUI ItemTexta; 
+
+	 public void Back()//ここを押したらItem画面を非表示にします。
+	{
+		Itema.SetActive(false);
+		ScrollView.SetActive(true);//。
+	} 
+	public void ItemCreateAI1()//Itemの名前
+{
+	int item11 = ES3.Load<int>("Item11", defaultValue: 0);
+	int hpPlayer = ES3.Load<int>("HPPlayer", defaultValue: 0);
+	int mpPlayer = ES3.Load<int>("MPPlayer", defaultValue: 0);
+
+	if (hpPlayer >= 4 && mpPlayer >= 3 && item11 >= 3)
+	{
+		ES3.Save<int>("Item11", item11 - 3);
+		ES3.Save<int>("Item6", ES3.Load<int>("Item6", defaultValue: 0) + 1);
+		ES3.Save<int>("HPrecovery", -3); //HPを消費します。
+		ES3.Save<int>("MPrecovery", -3);
+		 //ここでHP,MP。消費計算
+		AnimatorPlayer(); //ハンマーを叩きます。
+		StartCoroutine("On6");
+		Itema.SetActive(false);
+
+	}
+}
+
+
+
+
+	 public void Open34()//
+	{
+		Itema34.SetActive(true);
+		ScrollView.SetActive(false);//
+		ItemText.text = ("-10/" + ES3.Load<int>("Item32", defaultValue:0));
+		ItemTexta.text = ("-1/" + ES3.Load<int>("Item27", defaultValue:0));
+
+	}
+
+	 private IEnumerator On()
+	{
+
+		yield return new WaitForSeconds(3.01f);
+		 GameObject Itemd = Instantiate(Itemimge34, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
+		yield return new WaitForSeconds(4.01f);
+		ScrollView.SetActive(true);//スクロールビューは非表示にします。
+
+	}
+
+
+
+
+ */
